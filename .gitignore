@@ -1,0 +1,10 @@
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.bat
+*.txt
+node_modules
+data
