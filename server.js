@@ -1,126 +1,81 @@
 #!/bin/env node
 var express = require('express');
-var fs = require('fs');
 var mongo = require('mongodb');
+var fs = require('fs');
 
 var App = function () {
 
+
     var self = this;
     self.app = express();
+    self.routes = {};
 
-    // Serve up content from public directory
+    // Mongo DB setup 
+    var Server = mongo.Server;
+    var Db = mongo.Db;
+    self.server = new Server('localhost', 27017, { auto_reconnect: true });
+    self.db = new Db('exampleDb', self.server);
+
+
+    //Retrieves all station pair data from DB and dumps it to /dumpAll as JSON
+    self.routes['dumpAll'] = function (req, res) {
+        self.db.collection('testData').find().toArray(function (err, stations) {
+            res.header("Content-Type", "application/json");
+            res.end(JSON.stringify(stations));
+        });
+    };
+
+    //Retrieves station pair data from a single station. StationId comes from a parameter 'stationID' in the URI
+    self.routes['getSingleStationDepartures'] = function (req, res) {
+        var stationID = parseFloat(req.query.stationID);
+        self.db.collection('testData').find({ "start_ID": stationID }).toArray(function (err, names) {
+            res.header("Content-Type", "application/json");
+            res.end(JSON.stringify(names));
+        });
+    };
+
+    //Retrieves all station locations from a different collection in the db
+    self.routes['getStationLocations'] = function (req, res) {
+        var stationID = parseFloat(req.query.stationID);
+        self.db.collection('stationLoc').find().toArray(function (err, stations) {
+            res.header("Content-Type", "application/json");
+            res.end(JSON.stringify(stations));
+        });
+    };
+
+    // When server is started, all collections are emptied and station data + test data appended
+    self.db.open(function (err, db) {
+        if (!err) {
+            db.collection('stationLoc').remove()
+            db.collection('testData').remove()
+            fs.readFile('stationLocations.json', 'utf8', function (err, data) {
+                if (err) throw err;
+                var json = JSON.parse(data);
+                db.collection('stationLoc').insert(json, function (err, doc) {
+                    if (err) throw err;
+                });
+            });
+            for (var i = 1; i <= 25; i++) {
+                db.collection('testData').insert({ start_ID: Math.floor(Math.random() * 25), end_ID: Math.floor(Math.random() * 25) })
+                db.collection('testData').insert({ start_ID: 666, end_ID: Math.floor(Math.random() * 25) })
+
+            }
+        }
+    });
+
+    // Makes all files in /public visible for the user
     self.app.use(express.static(__dirname + '/public'));
-    self.app.get('/', (req,res) => res.send('Here be a very nice map'));
-    self.app.listen(3000,() => console.log('App listenting carefully on port 3000'));
+
+    // Defines what to do when GET requests are coming in on various /somethingsomething addresses. Other addresses produce 404
+    self.app.get('/dumpAll', self.routes['dumpAll']);
+    self.app.get('/getSingleStationDepartures', self.routes['getSingleStationDepartures']);
+    self.app.get('/getStationLocations', self.routes['getStationLocations']);
+
+    // Make app listen to a determined port
+    self.app.listen(1337, () => console.log('App listening carefully on port 1337'));
 
 
 };
 
+// A instance of the whole App is created
 var app = new App();
-
-
-
-
-// var App = function () {
-
-//     // Scope
-//     var self = this;
-
-    
-
-//     var Server = mongo.Server;
-//     var Db = mongo.Db;
-
-//     var dbServer = new Server('localhost', 27017, { auto_reconnect: true });
-//     var db = new Db('exampleDb', server);
-
-//     self.port = 3000;
-
-//     self.routes['dumpAllStationData'] = function (req, res) {
-//         // self.db.collection('lightning').find().toArray(function (err, names) {
-//         //     res.header("Content-Type:", "application/json");
-//         //     res.end(JSON.stringify(names));
-//         // });
-//         res.send('Hello World, here be all station data')
-//     };
-
-//     self.routes = {};
-
-//     // self.routes['within'] = function (req, res) {
-//     //     var lat1 = parseFloat(req.query.lat1);
-//     //     var lon1 = parseFloat(req.query.lon1);
-//     //     var lat2 = parseFloat(req.query.lat2);
-//     //     var lon2 = parseFloat(req.query.lon2);
-
-//     //     self.db.collection('lightning').find({ "pos": { $geoWithin: { $box: [[lon2, lat2], [lon1, lat1]] } }, cloud_indicator: 0 }).toArray(function (err, names) {
-//     //         res.header("Content-Type:", "application/json");
-//     //         res.end(JSON.stringify(names));
-//     //     });
-//     // };
-
-//     // self.routes['testData'] = function (req, res) {
-//     //     var lat1 = parseFloat(req.query.lat1);
-//     //     var lon1 = parseFloat(req.query.lon1);
-//     //     var lat2 = parseFloat(req.query.lat2);
-//     //     var lon2 = parseFloat(req.query.lon2);
-
-//     //     self.db.collection('testUkkone').find({ "pos": { $geoWithin: { $box: [[lon2, lat2], [lon1, lat1]] } }, cloud_indicator: 0 }).toArray(function (err, names) {
-//     //         res.header("Content-Type:", "application/json");
-//     //         res.end(JSON.stringify(names));
-//     //     });
-//     // };
-
-//     // self.routes['nearbyStrikes'] = function (req, res) {
-//     //     var lat1 = parseFloat(req.query.lat1);
-//     //     var lon1 = parseFloat(req.query.lon1);
-//     //     var lat2 = parseFloat(req.query.lat2);
-//     //     var lon2 = parseFloat(req.query.lon2);
-
-//     //     self.db.collection('testUkkone').find({ "pos": { $geoWithin: { $box: [[lon2, lat2], [lon1, lat1]] } }, cloud_indicator: 0 }).toArray(function (err, names) {
-//     //         res.header("Content-Type:", "application/json");
-//     //         res.end(JSON.stringify(names));
-//     //     });
-//     // };
-
-//     self.app = express();
-//     self.app.use(express.compress());
-
-//     // Serve up content from public directory
-//     self.app.use(express.static(__dirname + '/public'));
-
-
-//     //This uses the Connect frameworks body parser to parse the body of the post request
-//     // self.app.configure(function () {
-//     //     self.app.use(express.bodyParser());
-//     //     self.app.use(express.methodOverride());
-//     //     self.app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-//     // });
-
-//     self.app.get('/dumpAllStationData', self.routes['dumpALlStationData']);
-//     // self.app.get('/ws/strikes/within', redirectSec, self.routes['within']);
-//     // self.app.get('/testData', redirectSec, self.routes['testData']);
-//     // self.app.get('/nearbyStrikes', redirectSec, self.routes['nearbySTrikes']);
-
-//     db.open(function (err, db) {
-//         if (!err) {
-//             console.log("We are connected");
-//         };
-//     });
-
-//     self.startServer = function () {
-//         self.app.listen(self.port, function () {
-//             console.log('%s: Node server started on %s:%d ...', Date(Date.now()), self.port);
-//         });
-//     };
-
-//     ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT', 'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGPIPE', 'SIGTERM'].forEach(self.terminatorSetup);
-
-
-// };
-
-// //make a new express app
-// var app = new App();
-
-// //call the connectDb function and pass in the start server command
-// app.connectDb(app.startServer);
-
