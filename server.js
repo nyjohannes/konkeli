@@ -19,7 +19,7 @@ var App = function () {
 
     //Retrieves all station pair data from DB and dumps it to /dumpAll as JSON
     self.routes['dumpAll'] = function (req, res) {
-        self.db.collection('testData').find().toArray(function (err, stations) {
+        self.db.collection('stationPairs').find().toArray(function (err, stations) {
             res.header("Content-Type", "application/json");
             res.end(JSON.stringify(stations));
         });
@@ -27,8 +27,8 @@ var App = function () {
 
     //Retrieves station pair data from a single station. StationId comes from a parameter 'stationID' in the URI
     self.routes['getSingleStationDepartures'] = function (req, res) {
-        var stationID = parseFloat(req.query.stationID);
-        self.db.collection('testData').find({ "start_ID": stationID }).toArray(function (err, names) {
+        var stationID = parseInt(req.query.stationID);
+        self.db.collection('stationPairs').find({"DEPARTURE_STATION": stationID}).sort({ DEPARTURES: -1 }).limit(20).toArray(function (err, names) {
             res.header("Content-Type", "application/json");
             res.end(JSON.stringify(names));
         });
@@ -47,19 +47,22 @@ var App = function () {
     self.db.open(function (err, db) {
         if (!err) {
             db.collection('stationLoc').remove()
-            db.collection('testData').remove()
-            fs.readFile('stationLocations.json', 'utf8', function (err, data) {
+            db.collection('stationPairs').remove()
+            fs.readFile('station_locations.json', 'utf8', function (err, data) {
                 if (err) throw err;
                 var json = JSON.parse(data);
                 db.collection('stationLoc').insert(json, function (err, doc) {
                     if (err) throw err;
                 });
+                
             });
-            for (var i = 1; i <= 25; i++) {
-                db.collection('testData').insert({ start_ID: Math.floor(Math.random() * 25), end_ID: Math.floor(Math.random() * 25) })
-                db.collection('testData').insert({ start_ID: 666, end_ID: Math.floor(Math.random() * 25) })
-
-            }
+            fs.readFile('station_pair_data.json', 'utf8', function (err, data) {
+                if (err) throw err;
+                var json = JSON.parse(data);
+                db.collection('stationPairs').insert(json, function (err, doc) {
+                    if (err) throw err;
+                });
+            });
         }
     });
 
