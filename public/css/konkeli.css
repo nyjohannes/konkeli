@@ -7,4 +7,34 @@
             html, body, #map {
                 height: 100%;
             }
-        
+
+
+            .leaflet-div-icon {
+                position: absolute;
+                border-radius: 50%;
+                width:30px;
+                top:-15px;
+                left:-15px;
+                height:30px;
+                background-color:transparent;
+                text-align: center;
+                line-height:30px
+                
+            }
+            
+            .leaflet-marker-icon .number{
+                position: absolute;
+                font-size: 12px;
+                width: 25px;
+                text-align: center;
+                font-family:Titillium+Web
+            }
+
+             .square {
+                position:relative;
+                /* border-radius: 50%; */
+                /* background-color:#E9C46A; */
+                width:150%;
+                height:150%;
+                left:-25%
+            }

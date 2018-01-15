@@ -4,7 +4,7 @@ var lineGroup;
 var line;
 
 // Basic Leaflet set up. Basemap from the API of Digitransit
-var map = L.map('map').setView([60.18, 24.93], 12);
+var map = L.map('map').setView([60.18, 24.93], 13);
 var basemap = L.tileLayer('http://api.digitransit.fi/map/v1/{id}/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -13,11 +13,48 @@ var basemap = L.tileLayer('http://api.digitransit.fi/map/v1/{id}/{z}/{x}/{y}.png
 }).addTo(map);
 
 
+
 // Get stations locations from the server via GET. Call pinTheStations with the results
 function getStationLocations(e) {
     url = "/getStationLocations";
     $.get(url, pinTheStations, "json");
 }
+
+L.NumberedDivIcon = L.Icon.extend({
+    options: {
+        // EDIT THIS TO POINT TO THE FILE AT http://www.charliecroom.com/marker_hole.png (or your own marker)
+        // iconUrl: 'img/bike.png',
+        number: '',
+        shadowUrl: null,
+        className: 'leaflet-div-icon'
+    },
+
+    createIcon: function () {
+        var div = document.createElement('div');
+        var square = document.createElement('div');
+
+        square.setAttribute("class", "square");
+
+        square.innerHTML = this.options['number'] || '';
+
+        div.style.width = this.options['width'] +"px";
+        div.style.height = this.options['width'] + "px";
+        div.style.top ="-" + this.options['width']/2 + "px";
+        div.style.left ="-" + this.options['width']/2 + "px";
+        div.style.lineHeight = this.options['width'] + "px";
+
+        div.appendChild(square);
+
+        this._setIconStyles(div, 'icon');
+        return div;
+    },
+
+    //you could change this to add a shadow like in the normal marker if you really wanted
+    createShadow: function () {
+        return null;
+    }
+});
+
 
 // Make markers out of the station JSON data, add them to a layergroup and add the group to the map
 function pinTheStations(stationJSON) {
@@ -26,16 +63,28 @@ function pinTheStations(stationJSON) {
     for (var i = 0; i < stationJSON.length; i++) {
         var station = stationJSON[i];
         stationGroupDict[station.ID] = [station.XCOORD, station.YCOORD];
-        var stationMarker = L.circleMarker([station.YCOORD, station.XCOORD],
+
+        var stationMarker = L.marker([station.YCOORD, station.XCOORD],
             {
-                radius: 6,
-                fillColor: "#05668D",
+                icon: new L.NumberedDivIcon({ number: station.DEPARTURES, width: (station.DEPARTURES / 1000) }),
                 nimi: station.Nimi,
-                osoite: station.Osoite,
                 ID: station.ID,
-                isOpen: false
-            }).on("click", getStationDepartures);;
-        stationMarker.bindPopup("<b>NIMI: </b>" + station.Nimi + "<br>" + "<b>Osoite: </b>" + station.Osoite)
+                DEPARTURES: station.DEPARTURES
+            }
+        ).on("click", getStationDepartures);;
+
+        // var stationMarker = L.circleMarker([station.YCOORD, station.XCOORD],
+        //     {
+        //         radius: 6,
+        //         fillColor: "#05668D",
+        //         nimi: station.Nimi,
+        //         osoite: station.Osoite,
+        //         ID: station.ID,
+        //         isOpen: false
+        //     }).on("click", getStationDepartures);;
+
+        stationMarker.bindPopup("<b>NIMI: </b>" + station.Nimi + "<br>" + "<b>Departures: </b>" + station.DEPARTURES);
+
         stationGroup.addLayer(stationMarker);
     }
     stationGroup.addTo(map)
@@ -103,7 +152,7 @@ function drawStationPairLines(station_pair_JSON) {
                 distance_mean: station_pair_JSON[i].DISTANCE_MEAN,
                 clickable: true
 
-            }).addTo(map).bindPopup("<b>Mean duration:</b> " + parseFloat(station_pair_JSON[i].DURATION_MEAN).toFixed(2) + "<br>" + "<b>Mean distance: </b>" +parseFloat( station_pair_JSON[i].DISTANCE_MEAN).toFixed(2) ).snakeIn()
+            }).addTo(map).bindPopup("<b>Mean duration:</b> " + parseFloat(station_pair_JSON[i].DURATION_MEAN).toFixed(2) + "<br>" + "<b>Mean distance: </b>" + parseFloat(station_pair_JSON[i].DISTANCE_MEAN).toFixed(2)).snakeIn()
 
         line.on({
             mouseover: highlightFeature,
@@ -135,13 +184,13 @@ function highlightFeature(e) {
 function resetHighlight(e) {
     var layer = e.target;
     this.closePopup()
-    
-        layer.setStyle({
-            weight: 2,
-            color: 'blue',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+
+    layer.setStyle({
+        weight: 2,
+        color: 'blue',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
 }
 
 
