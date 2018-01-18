@@ -38,3 +38,54 @@
                 height:150%;
                 left:-25%
             }
+
+            #infodiv{
+                position:absolute;
+                border-radius:50px / 50px;
+                background-color: white;
+                width:400px;
+                top:2%;
+                right:3%;
+                bottom:2%;
+                z-index:1000;
+                -webkit-box-shadow:0 1px 4px rgba(128, 128, 128, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
+                -moz-box-shadow:0 1px 4px rgba(128, 128, 128, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
+                     box-shadow:0 1px 4px rgba(128, 128, 128, 0.3), 0 0 40px rgba(128, 128,128, 0.1) inset;
+            }
+
+            #infodiv:before, #infodiv:after
+            {
+                content:"";
+                position:absolute;
+                z-index:-1;
+                -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+                -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+                box-shadow:0 0 20px rgba(0,0,0,0.8);
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+                -moz-border-radius:50px / 50px;
+                border-radius:50px / 50px;
+            }
+            #infodiv:after
+            {
+                right:10px;
+                left:auto;
+                -webkit-transform:skew(8deg) rotate(3deg);
+                   -moz-transform:skew(8deg) rotate(3deg);
+                    -ms-transform:skew(8deg) rotate(3deg);
+                     -o-transform:skew(8deg) rotate(3deg);
+                        transform:skew(8deg) rotate(3deg);
+            }
+
+            #graphWrapper 
+            {
+                position: relative;
+                width:380px;
+                height:300px;
+                left:10px;
+                top:10%;
+                background-color:gray;
+
+            }

@@ -13,7 +13,6 @@ var basemap = L.tileLayer('http://api.digitransit.fi/map/v1/{id}/{z}/{x}/{y}.png
 }).addTo(map);
 
 
-
 // Get stations locations from the server via GET. Call pinTheStations with the results
 function getStationLocations(e) {
     url = "/getStationLocations";
@@ -37,10 +36,10 @@ L.NumberedDivIcon = L.Icon.extend({
 
         square.innerHTML = this.options['number'] || '';
 
-        div.style.width = this.options['width'] +"px";
+        div.style.width = this.options['width'] + "px";
         div.style.height = this.options['width'] + "px";
-        div.style.top ="-" + this.options['width']/2 + "px";
-        div.style.left ="-" + this.options['width']/2 + "px";
+        div.style.top = "-" + this.options['width'] / 2 + "px";
+        div.style.left = "-" + this.options['width'] / 2 + "px";
         div.style.lineHeight = this.options['width'] + "px";
 
         div.appendChild(square);
@@ -112,6 +111,8 @@ function getStationDepartures(e) {
     $.get(url, drawStationPairLines, "json");
 
 }
+
+
 
 
 
