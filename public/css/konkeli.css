@@ -27,7 +27,7 @@
                 font-size: 12px;
                 width: 25px;
                 text-align: center;
-                font-family:Titillium+Web
+                font-family: 'Titillium Web', sans-serif;
             }
 
              .square {
@@ -79,13 +79,23 @@
                         transform:skew(8deg) rotate(3deg);
             }
 
-            #graphWrapper 
-            {
-                position: relative;
-                width:380px;
-                height:300px;
-                left:10px;
-                top:10%;
-                background-color:gray;
 
+            body {
+                font: 12px Helvetica;
+              }
+              
+            .axis line {
+                fill: none;
+                stroke: #000;
+                shape-rendering: crispEdges;
+            }
+          
+            .x.axis path {
+                display: none;
+            }
+            
+            .line {
+                fill: none;
+                stroke: steelblue;
+                stroke-width: 2px;
             }

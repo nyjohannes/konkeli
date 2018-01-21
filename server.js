@@ -26,7 +26,7 @@ var App = function () {
     };
 
     //Retrieves station pair data from a single station. StationId comes from a parameter 'stationID' in the URI
-    self.routes['getSingleStationDepartures'] = function (req, res) {
+    self.routes['getStationDepartures'] = function (req, res) {
         var stationID = parseInt(req.query.stationID);
         self.db.collection('stationPairs').find({"DEPARTURE_STATION": stationID}).sort({ DEPARTURES: -1 }).limit(20).toArray(function (err, names) {
             res.header("Content-Type", "application/json");
@@ -43,29 +43,22 @@ var App = function () {
         });
     };
 
-    self.routes['getStationDepartureTimes'] = function (req, res) {
+    self.routes['getStationTimes'] = function (req, res) {
         var stationID = parseFloat(req.query.stationID);
-        self.db.collection('stationDep').find({"DEPARTURE_STATION": stationID}).toArray(function (err, stations) {
+        self.db.collection('stationTime').find({"STATION": stationID},{_id:0,STATION:0}).toArray(function (err, stations) {
             res.header("Content-Type", "application/json");
             res.end(JSON.stringify(stations));
         });
     };
 
-    self.routes['getStationReturnTimes'] = function (req, res) {
-        var stationID = parseFloat(req.query.stationID);
-        self.db.collection('stationRet').find({"RETURN_STATION": stationID}).toArray(function (err, stations) {
-            res.header("Content-Type", "application/json");
-            res.end(JSON.stringify(stations));
-        });
-    };
 
     // When server is started, all collections are emptied and station data + test data appended
     self.db.open(function (err, db) {
         if (!err) {
             db.collection('stationLoc').remove()
             db.collection('stationPairs').remove()
-            db.collection('stationDep').remove()
-            db.collection('stationRet').remove()
+            db.collection('stationTime').remove()
+
             fs.readFile('station_locations.json', 'utf8', function (err, data) {
                 if (err) throw err;
                 var json = JSON.parse(data);
@@ -81,20 +74,14 @@ var App = function () {
                     if (err) throw err;
                 });
             });
-            fs.readFile('DEPARTURES_BY_TIME.json', 'utf8', function (err, data) {
+            fs.readFile('STATIONS_BY_TIME.json', 'utf8', function (err, data) {
                 if (err) throw err;
                 var json = JSON.parse(data);
-                db.collection('stationDep').insert(json, function (err, doc) {
+                db.collection('stationTime').insert(json, function (err, doc) {
                     if (err) throw err;
                 });
             });
-            fs.readFile('RETURNS_BY_TIME.json', 'utf8', function (err, data) {
-                if (err) throw err;
-                var json = JSON.parse(data);
-                db.collection('stationRet').insert(json, function (err, doc) {
-                    if (err) throw err;
-                });
-            });
+
         }
     });
 
@@ -103,10 +90,9 @@ var App = function () {
 
     // Defines what to do when GET requests are coming in on various /somethingsomething addresses. Other addresses produce 404
     self.app.get('/dumpAll', self.routes['dumpAll']);
-    self.app.get('/getSingleStationDepartures', self.routes['getSingleStationDepartures']);
+    self.app.get('/getStationDepartures', self.routes['getStationDepartures']);
     self.app.get('/getStationLocations', self.routes['getStationLocations']);
-    self.app.get('/getStationDepartureTimes', self.routes['getStationDepartureTimes']);
-    self.app.get('/getStationReturnTimes', self.routes['getStationReturnTimes']);
+    self.app.get('/getStationTimes', self.routes['getStationTimes']);
 
     // Make app listen to a determined port
     self.app.listen(1337, () => console.log('App listening carefully on port 1337'));

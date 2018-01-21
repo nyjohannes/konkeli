@@ -1,5 +1,3 @@
-
-
 var lineGroup;
 var line;
 
@@ -13,6 +11,107 @@ var basemap = L.tileLayer('http://api.digitransit.fi/map/v1/{id}/{z}/{x}/{y}.png
 }).addTo(map);
 
 
+function drawTimeGraph(station_times_url) {
+
+    document.getElementById("graphContainer").innerHTML = "";
+
+    var margin = { top: 30, right: 30, bottom: 30, left: 50 },
+        width = 400 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+    var x = d3.scale.linear().range([0, width])
+    var y = d3.scale.linear().range([height, 0]);
+
+    var color = d3.scale.category10();
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .ticks(24)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .ticks(5)
+        .orient("left");
+
+    var line = d3.svg.line()
+        .interpolate("basis")
+        .x(function (d) { return x(d.TIME); })
+        .y(function (d) { return y(d.AMOUNT); });
+
+
+    var svg = d3.select("#graphContainer").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.json(station_times_url, function (error, data) {
+        color.domain(d3.keys(data[0]).filter(function (key) { return key !== "TIME"; }));
+
+
+        var time_series = color.domain().map(function (name) {
+            return {
+                name: name,
+                values: data.map(function (d) {
+                    return { TIME: d.TIME, AMOUNT: +d[name] };
+                })
+            };
+        });
+
+        x.domain([0, 24])
+
+        y.domain([0, d3.max(time_series, function (c) { return d3.max(c.values, function (v) { return v.AMOUNT; }); })
+        ]);
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+
+
+        var time_serie = svg.selectAll(".timeSeries")
+            .data(time_series)
+            .enter().append("g")
+            .attr("class", "timeSeries");
+
+
+
+        var path = svg.selectAll(".timeSeries").append("path")
+            .attr("class", "line")
+            .attr("d", function (d) { return line(d.values); })
+            .style("stroke", function (d) {
+                if (d.name == "DEPARTURES") { return "rgb(000,255,000)" }
+                else { return "#000"; }
+            });
+
+        var totalLength = [path[0][0].getTotalLength(), path[0][1].getTotalLength()];
+
+
+        d3.select(path[0][0])
+            .attr("stroke-dasharray", totalLength[0] + " " + totalLength[0])
+            .attr("stroke-dashoffset", totalLength[0])
+            .transition()
+            .duration(500)
+            .ease("linear")
+            .attr("stroke-dashoffset", 0);
+
+        d3.select(path[0][1])
+            .attr("stroke-dasharray", totalLength[1] + " " + totalLength[1])
+            .attr("stroke-dashoffset", totalLength[1])
+            .transition()
+            .duration(500)
+            .ease("linear")
+            .attr("stroke-dashoffset", 0);
+
+    });
+
+}
+
 // Get stations locations from the server via GET. Call pinTheStations with the results
 function getStationLocations(e) {
     url = "/getStationLocations";
@@ -21,8 +120,6 @@ function getStationLocations(e) {
 
 L.NumberedDivIcon = L.Icon.extend({
     options: {
-        // EDIT THIS TO POINT TO THE FILE AT http://www.charliecroom.com/marker_hole.png (or your own marker)
-        // iconUrl: 'img/bike.png',
         number: '',
         shadowUrl: null,
         className: 'leaflet-div-icon'
@@ -70,17 +167,7 @@ function pinTheStations(stationJSON) {
                 ID: station.ID,
                 DEPARTURES: station.DEPARTURES
             }
-        ).on("click", getStationDepartures);;
-
-        // var stationMarker = L.circleMarker([station.YCOORD, station.XCOORD],
-        //     {
-        //         radius: 6,
-        //         fillColor: "#05668D",
-        //         nimi: station.Nimi,
-        //         osoite: station.Osoite,
-        //         ID: station.ID,
-        //         isOpen: false
-        //     }).on("click", getStationDepartures);;
+        ).on("click", getStationDepartures);
 
         stationMarker.bindPopup("<b>NIMI: </b>" + station.Nimi + "<br>" + "<b>Departures: </b>" + station.DEPARTURES);
 
@@ -97,24 +184,20 @@ function getStationDepartures(e) {
             if (map['_layers'][key].options.snakingSpeed) {
                 map.removeLayer(map['_layers'][key])
             }
-
         }
-
     }
 
-
-    // console.log(clickedStation);
     clickedStation.options.isOpen = true
     station_ID = parseInt(clickedStation.options.ID)
-    url = "/getSingleStationDepartures?stationID=" + station_ID;
-    console.log(url)
-    $.get(url, drawStationPairLines, "json");
+    station_pair_URL = "/getStationDepartures?stationID=" + station_ID;
+    station_times_url = "/getStationTimes?stationID=" + station_ID
+
+    console.log(station_times_url)
+    $.get(station_pair_URL, drawStationPairLines, "json");
+    // $.get(station_departure_times_url, drawDepartureTimeGraph, "json");
+    drawTimeGraph(station_times_url)
 
 }
-
-
-
-
 
 function getLineWeight(departures) {
     switch (true) {
@@ -160,9 +243,6 @@ function drawStationPairLines(station_pair_JSON) {
             mouseout: resetHighlight
         });
 
-
-        // lineGroup.addLayer(line);
-        // lineGroup.addTo(map).snakeIn();
     }
 }
 
@@ -193,8 +273,6 @@ function resetHighlight(e) {
         fillOpacity: 0.7
     });
 }
-
-
 
 // Call getStationLocations after map ready.
 map.whenReady(getStationLocations);
