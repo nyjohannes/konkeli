@@ -2,23 +2,30 @@
             body {
                 padding: 0;
                 margin: 0;
+                font-family: 'Titillium Web', sans-serif;
             }
 
             html, body, #map {
                 height: 100%;
             }
+            #stationPairTable{
 
+                font-size:14px;
+                padding-top:20px;
+                
+            }
 
             .leaflet-div-icon {
                 position: absolute;
-                border-radius: 50%;
-                width:30px;
-                top:-15px;
-                left:-15px;
-                height:30px;
+                border:none;
+                /* border-radius: 50%; */
+                width:50px;
+                top:-24px;
+                left:-24px;
+                height:50px;
                 background-color:transparent;
                 text-align: center;
-                line-height:30px
+                /* line-height:30px */
                 
             }
             
@@ -30,20 +37,19 @@
                 font-family: 'Titillium Web', sans-serif;
             }
 
-             .square {
+            #textDiv {
                 position:relative;
-                /* border-radius: 50%; */
-                /* background-color:#E9C46A; */
-                width:150%;
-                height:150%;
-                left:-25%
+                font-family:  'Patua One', cursive;
+                color:#004080;
+                font-weight: bolder
             }
 
             #infodiv{
                 position:absolute;
-                border-radius:50px / 50px;
+                border-radius:20px / 20px;
                 background-color: white;
                 width:400px;
+                text-align:center;
                 top:2%;
                 right:3%;
                 bottom:2%;
@@ -51,6 +57,60 @@
                 -webkit-box-shadow:0 1px 4px rgba(128, 128, 128, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
                 -moz-box-shadow:0 1px 4px rgba(128, 128, 128, 0.3), 0 0 40px rgba(128, 128, 128, 0.1) inset;
                      box-shadow:0 1px 4px rgba(128, 128, 128, 0.3), 0 0 40px rgba(128, 128,128, 0.1) inset;
+            }
+
+            h1 {
+                color:#5b5b5b;
+                margin-bottom:0;
+                letter-spacing:1px;
+            }
+
+            p{
+                font-size:24px;
+                color:#5b5b5b;
+                padding-left:10%;
+                padding-top:5%;
+                margin:0;
+            }
+
+            #statRightText {
+                float:right;
+                padding-right:10%;
+            }
+
+            #statLeftText {
+                font-weight: bold;
+                padding-left:10%;
+                padding-right:10%;
+                float:left
+            }
+            
+            #statsContainer{
+                height:180px;
+                text-align:none;
+            }
+
+            #imgDiv {
+                position: absolute;
+                top: 35%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+            }
+
+            #textDiv{
+                position:absolute;
+                left:50%;
+                transform: translate(-50%, 0%);
+            }
+
+            #infoDivTitle{
+                color:#004080
+            }
+
+            #stationPairDivTitle {
+
+                color: #004080
             }
 
             #infodiv:before, #infodiv:after
@@ -65,8 +125,8 @@
                 bottom:0;
                 left:0;
                 right:0;
-                -moz-border-radius:50px / 50px;
-                border-radius:50px / 50px;
+                -moz-border-radius:20px / 20px;
+                border-radius:20px / 20px;
             }
             #infodiv:after
             {
@@ -78,24 +138,24 @@
                      -o-transform:skew(8deg) rotate(3deg);
                         transform:skew(8deg) rotate(3deg);
             }
+            #graphContainer {
+                
+                font-size:14px;
 
+            }
 
-            body {
-                font: 12px Helvetica;
-              }
-              
             .axis line {
                 fill: none;
                 stroke: #000;
                 shape-rendering: crispEdges;
             }
-          
-            .x.axis path {
-                display: none;
+
+            .legend rect {
+                fill:white;
+                opacity:0.5;
             }
-            
+
             .line {
                 fill: none;
-                stroke: steelblue;
                 stroke-width: 2px;
             }

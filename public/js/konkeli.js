@@ -10,10 +10,7 @@ var basemap = L.tileLayer('http://api.digitransit.fi/map/v1/{id}/{z}/{x}/{y}.png
     id: 'hsl-map'
 }).addTo(map);
 
-
 function drawTimeGraph(station_times_url) {
-
-    document.getElementById("graphContainer").innerHTML = "";
 
     var margin = { top: 30, right: 30, bottom: 30, left: 50 },
         width = 400 - margin.left - margin.right,
@@ -26,7 +23,7 @@ function drawTimeGraph(station_times_url) {
 
     var xAxis = d3.svg.axis()
         .scale(x)
-        .ticks(24)
+        .ticks(12)
         .orient("bottom");
 
     var yAxis = d3.svg.axis()
@@ -67,10 +64,12 @@ function drawTimeGraph(station_times_url) {
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
+            .style({ 'stroke': '#5b5b5b', 'fill': 'none', 'stroke-width': '1px' })
             .call(xAxis);
 
         svg.append("g")
             .attr("class", "y axis")
+            .style({ 'stroke': '#5b5b5b', 'fill': 'none', 'stroke-width': '1px' })
             .call(yAxis);
 
 
@@ -79,24 +78,22 @@ function drawTimeGraph(station_times_url) {
             .enter().append("g")
             .attr("class", "timeSeries");
 
-
-
         var path = svg.selectAll(".timeSeries").append("path")
             .attr("class", "line")
             .attr("d", function (d) { return line(d.values); })
+            .attr("data-legend", function (d) { return d.name })
             .style("stroke", function (d) {
-                if (d.name == "DEPARTURES") { return "rgb(000,255,000)" }
-                else { return "#000"; }
+                if (d.name == "DEPARTURES") { return "#004080" }
+                else { return "#EE6C4D"; }
             });
 
         var totalLength = [path[0][0].getTotalLength(), path[0][1].getTotalLength()];
-
 
         d3.select(path[0][0])
             .attr("stroke-dasharray", totalLength[0] + " " + totalLength[0])
             .attr("stroke-dashoffset", totalLength[0])
             .transition()
-            .duration(500)
+            .duration(800)
             .ease("linear")
             .attr("stroke-dashoffset", 0);
 
@@ -104,9 +101,16 @@ function drawTimeGraph(station_times_url) {
             .attr("stroke-dasharray", totalLength[1] + " " + totalLength[1])
             .attr("stroke-dashoffset", totalLength[1])
             .transition()
-            .duration(500)
+            .duration(800)
             .ease("linear")
             .attr("stroke-dashoffset", 0);
+
+
+        var legend = svg.append("g")
+            .attr("class", "legend")
+            .attr("transform", "translate(20,30)")
+            .style("font-size", "14px")
+            .call(d3.legend)
 
     });
 
@@ -127,19 +131,20 @@ L.NumberedDivIcon = L.Icon.extend({
 
     createIcon: function () {
         var div = document.createElement('div');
-        var square = document.createElement('div');
+        var textDiv = document.createElement('div');
+        textDiv.id = 'textDiv'
+        var imgDiv = document.createElement('div')
+        imgDiv.id = 'imgDiv'
+        var img = document.createElement('img')
+        img.src = '/img/bike.png'
+        img.width = this.options['width']
+        img.height = this.options['width']
+        textDiv.style.bottom = String(-9 / 28 * parseInt(this.options['width']) + 395 / 28) + "px";
 
-        square.setAttribute("class", "square");
-
-        square.innerHTML = this.options['number'] || '';
-
-        div.style.width = this.options['width'] + "px";
-        div.style.height = this.options['width'] + "px";
-        div.style.top = "-" + this.options['width'] / 2 + "px";
-        div.style.left = "-" + this.options['width'] / 2 + "px";
-        div.style.lineHeight = this.options['width'] + "px";
-
-        div.appendChild(square);
+        textDiv.textContent = this.options['number'] || '';
+        imgDiv.appendChild(img)
+        div.appendChild(imgDiv)
+        div.appendChild(textDiv)
 
         this._setIconStyles(div, 'icon');
         return div;
@@ -158,26 +163,37 @@ function pinTheStations(stationJSON) {
     stationGroupDict = {}
     for (var i = 0; i < stationJSON.length; i++) {
         var station = stationJSON[i];
-        stationGroupDict[station.ID] = [station.XCOORD, station.YCOORD];
+        stationGroupDict[station.ID] = [station.XCOORD, station.YCOORD, station.Nimi];
 
         var stationMarker = L.marker([station.YCOORD, station.XCOORD],
             {
-                icon: new L.NumberedDivIcon({ number: station.DEPARTURES, width: (station.DEPARTURES / 1000) }),
+                icon: new L.NumberedDivIcon({ number: station.DEPARTURES, width: (7 / 9375 * station.DEPARTURES + 272 / 15) }),
                 nimi: station.Nimi,
                 ID: station.ID,
-                DEPARTURES: station.DEPARTURES
+                DEPARTURES: station.DEPARTURES,
+                RETURNS: 0,
+                SIZE: 0
             }
-        ).on("click", getStationDepartures);
+        ).on("click", iClickedOnAStation);
 
-        stationMarker.bindPopup("<b>NIMI: </b>" + station.Nimi + "<br>" + "<b>Departures: </b>" + station.DEPARTURES);
+        // stationMarker.bindPopup("<b>NIMI: </b>" + station.Nimi + "<br>" + "<b>Departures: </b>" + station.DEPARTURES);
 
         stationGroup.addLayer(stationMarker);
     }
     stationGroup.addTo(map)
 }
 
-function getStationDepartures(e) {
+function iClickedOnAStation(e) {
+    infoDiv = document.getElementById("infoDiv")
+    document.getElementById("graphContainer").innerHTML = "";
+    document.getElementById("statsContainer").innerHTML = "";
+    document.getElementById("stationPairContainer").innerHTML = "";
+
+    title = document.getElementById("infoDivTitle")
+    title.innerHTML = e.target.options.nimi
+
     clickedStation = e.target;
+    console.log(e.target);
     if (map.hasLayer(line)) {
         for (key in map['_layers']) {
             // console.log(map['_layers'][key])
@@ -193,9 +209,79 @@ function getStationDepartures(e) {
     station_times_url = "/getStationTimes?stationID=" + station_ID
 
     console.log(station_times_url)
-    $.get(station_pair_URL, drawStationPairLines, "json");
-    // $.get(station_departure_times_url, drawDepartureTimeGraph, "json");
+
+    // $.get(station_pair_URL, drawStationPairLines, "json");
     drawTimeGraph(station_times_url)
+
+    $.getJSON(station_pair_URL, dealWithReceivedJSON);
+
+    function dealWithReceivedJSON(data) {
+        drawStationPairLines(data);
+        createStationPairTable(data);
+    }
+
+    var statisticsDiv = document.getElementById("statsContainer")
+    createStatTextLine(statisticsDiv, "Departures: ", e.target.options.DEPARTURES)
+    createStatTextLine(statisticsDiv, "Returns: ", e.target.options.RETURNS)
+    createStatTextLine(statisticsDiv, "Station size: ", e.target.options.SIZE)
+
+
+}
+
+function createStationPairTable(data) {
+    stationPairDiv = document.getElementById("stationPairContainer");
+    var title = document.createElement("H1")
+    title.id = "stationPairDivTitle"
+    title.innerHTML = "Top 10 destinations";
+    stationPairDiv.appendChild(title)
+
+    var col = ["RETURN_STATION", "DEPARTURES", "DISTANCE_MEAN", "DURATION_MEAN"];
+    var better_cols = ["DESTINATION", "DEPARTURES", "DISTANCE (MEAN)", "DURATION (MEAN)"];
+
+    console.log(col)
+    var table = document.createElement("table");
+    table.id = "stationPairTable"
+    var tr = table.insertRow(-1);
+
+    for (var i = 0; i < better_cols.length; i++) {
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = better_cols[i];
+        tr.appendChild(th);
+    }
+    for (var i = 0; i < data.length; i++) {
+
+        tr = table.insertRow(-1);
+
+        for (var j = 0; j < col.length; j++) {
+            var tabCell = tr.insertCell(-1);
+
+            value = data[i][col[j]]
+            if (col[j] == "DISTANCE_MEAN") { value = Math.round(value) +" m" }
+            if (col[j] == "DURATION_MEAN") { value = Math.round(value / 60) +" min" }
+            if(col[j] == "RETURN_STATION") { value = stationGroupDict[data[i][col[j]]].slice(2,3)}
+
+            tabCell.innerHTML = value
+
+        }
+    }
+    stationPairDiv.appendChild(table)
+
+}
+
+function createStatTextLine(div, leftText, rightText) {
+
+    var left = document.createElement("P");
+    left.id = "statLeftText"
+    var t = document.createTextNode(leftText);
+    left.appendChild(t)
+
+    var right = document.createElement("P")
+    right.id = "statRightText"
+    var t = document.createTextNode(rightText);
+    right.appendChild(t)
+
+    div.appendChild(left);
+    div.appendChild(right);
 
 }
 
@@ -221,27 +307,30 @@ function drawStationPairLines(station_pair_JSON) {
     // console.log(station_pair_JSON)
     // console.log(station_pair_JSON)
     // console.log(stationGroupDict)
-    departure_station_coord = stationGroupDict[station_pair_JSON[0].DEPARTURE_STATION]
+    departure_station_coord = stationGroupDict[station_pair_JSON[0].DEPARTURE_STATION].slice(0,2)
 
     for (var i = 0; i < station_pair_JSON.length; i++) {
-        return_station_coord = stationGroupDict[station_pair_JSON[i].RETURN_STATION]
+        return_station_coord = stationGroupDict[station_pair_JSON[i].RETURN_STATION].slice(0,2)
         if (typeof (return_station_coord) == 'undefined') {
             console.log("STATION: " + station_pair_JSON[i].RETURN_STATION + " NOT FOUND")
         }
         line = L.polyline([new L.LatLng(departure_station_coord[1], departure_station_coord[0]), new L.LatLng(return_station_coord[1], return_station_coord[0])],
             {
+                color: '#004080',
                 weight: getLineWeight(station_pair_JSON[i].DEPARTURES),
                 snakingSpeed: 500,
                 duration_mean: station_pair_JSON[i].DURATION_MEAN,
                 distance_mean: station_pair_JSON[i].DISTANCE_MEAN,
                 clickable: true
 
-            }).addTo(map).bindPopup("<b>Mean duration:</b> " + parseFloat(station_pair_JSON[i].DURATION_MEAN).toFixed(2) + "<br>" + "<b>Mean distance: </b>" + parseFloat(station_pair_JSON[i].DISTANCE_MEAN).toFixed(2)).snakeIn()
+            }).addTo(map).snakeIn()
 
-        line.on({
-            mouseover: highlightFeature,
-            mouseout: resetHighlight
-        });
+        // .bindPopup("<b>Mean duration:</b> " + parseFloat(station_pair_JSON[i].DURATION_MEAN).toFixed(2) + "<br>" + "<b>Mean distance: </b>" + parseFloat(station_pair_JSON[i].DISTANCE_MEAN).toFixed(2))
+
+        // line.on({
+        //     mouseover: highlightFeature,
+        //     mouseout: resetHighlight
+        // });
 
     }
 }
@@ -268,7 +357,7 @@ function resetHighlight(e) {
 
     layer.setStyle({
         weight: 2,
-        color: 'blue',
+        color: '#004080',
         dashArray: '',
         fillOpacity: 0.7
     });

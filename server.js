@@ -28,7 +28,7 @@ var App = function () {
     //Retrieves station pair data from a single station. StationId comes from a parameter 'stationID' in the URI
     self.routes['getStationDepartures'] = function (req, res) {
         var stationID = parseInt(req.query.stationID);
-        self.db.collection('stationPairs').find({"DEPARTURE_STATION": stationID}).sort({ DEPARTURES: -1 }).limit(20).toArray(function (err, names) {
+        self.db.collection('stationPairs').find({"DEPARTURE_STATION": stationID}).sort({ DEPARTURES: -1 }).limit(10).toArray(function (err, names) {
             res.header("Content-Type", "application/json");
             res.end(JSON.stringify(names));
         });
