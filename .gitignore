@@ -5,10 +5,7 @@ npm-debug.log
 # Local development
 *.env
 *.dev
-STATION_PAIR_DATA_filtered.json
-STATIONS_PAIR_DATA_filtered_mini.json
-STATIONS_BY_TIME.json
-app.json
+data/
 .gitignore
 .DS_Store
 
