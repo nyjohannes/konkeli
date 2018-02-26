@@ -1,7 +1,7 @@
 {
   "name": "Konkeli",
-  "version": "0.0.5",
-  "description": "Kaupunkipyöräverkosto",
+  "version": "0.9.0",
+  "description": "A web application showing information on the City Bike System in Helsinki",
   "engines": {
     "node": "8.9.4"
   },
@@ -26,12 +26,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/nyjohannes/konkeli"
   },
   "keywords": [
     "node",
     "heroku",
-    "express"
+    "express",
+	"konkeli"
   ],
   "license": "MIT"
 }

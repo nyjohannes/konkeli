@@ -6,6 +6,7 @@ npm-debug.log
 *.env
 *.dev
 data/
+Procfile
 .gitignore
 .DS_Store
 
