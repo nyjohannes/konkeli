@@ -1,6 +1,0 @@
-{
-  "name": "Konkeli",
-  "description": "A map application of the Helsinki city bike system",
-  "repository": "https://github.com/nyjohannes/konkeli",
-  "keywords": ["node", "express", "heroku","konkeli"]
-}
