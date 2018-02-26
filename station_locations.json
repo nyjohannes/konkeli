@@ -1,0 +1,1122 @@
+[
+    {
+        "ID": 1,
+        "NIMI": "Kaivopuisto",
+        "XCOORD": 24.9503012,
+        "YCOORD": 60.1553916,
+        "DEPARTURES": 15545,
+        "RETURNS": 16874
+    },
+    {
+        "ID": 2,
+        "NIMI": "Laivasillankatu",
+        "XCOORD": 24.9553142,
+        "YCOORD": 60.1597641,
+        "DEPARTURES": 9127,
+        "RETURNS": 9005
+    },
+    {
+        "ID": 3,
+        "NIMI": "Kapteeninpuistikko",
+        "XCOORD": 24.9449274,
+        "YCOORD": 60.1581892,
+        "DEPARTURES": 11361,
+        "RETURNS": 11111
+    },
+    {
+        "ID": 4,
+        "NIMI": "Viiskulma",
+        "XCOORD": 24.9417758,
+        "YCOORD": 60.1609859,
+        "DEPARTURES": 15116,
+        "RETURNS": 14446
+    },
+    {
+        "ID": 5,
+        "NIMI": "Sep\u00e4nkatu",
+        "XCOORD": 24.9362853,
+        "YCOORD": 60.1579483,
+        "DEPARTURES": 23670,
+        "RETURNS": 23455
+    },
+    {
+        "ID": 6,
+        "NIMI": "Hietalahdentori",
+        "XCOORD": 24.9297099,
+        "YCOORD": 60.1622251,
+        "DEPARTURES": 26779,
+        "RETURNS": 26856
+    },
+    {
+        "ID": 7,
+        "NIMI": "Designmuseo",
+        "XCOORD": 24.94596,
+        "YCOORD": 60.1631032,
+        "DEPARTURES": 10433,
+        "RETURNS": 10082
+    },
+    {
+        "ID": 8,
+        "NIMI": "Vanha Kirkkopuisto",
+        "XCOORD": 24.9391499,
+        "YCOORD": 60.1652883,
+        "DEPARTURES": 17203,
+        "RETURNS": 17238
+    },
+    {
+        "ID": 9,
+        "NIMI": "Erottaja",
+        "XCOORD": 24.9440114,
+        "YCOORD": 60.1671077,
+        "DEPARTURES": 22729,
+        "RETURNS": 24381
+    },
+    {
+        "ID": 10,
+        "NIMI": "Kasarmitori",
+        "XCOORD": 24.948881,
+        "YCOORD": 60.1655365,
+        "DEPARTURES": 9557,
+        "RETURNS": 9987
+    },
+    {
+        "ID": 11,
+        "NIMI": "Unioninkatu",
+        "XCOORD": 24.9510227,
+        "YCOORD": 60.1674573,
+        "DEPARTURES": 19246,
+        "RETURNS": 23741
+    },
+    {
+        "ID": 12,
+        "NIMI": "Kanavaranta",
+        "XCOORD": 24.9583814,
+        "YCOORD": 60.168384,
+        "DEPARTURES": 14048,
+        "RETURNS": 14896
+    },
+    {
+        "ID": 13,
+        "NIMI": "Merisotilaantori",
+        "XCOORD": 24.9755341,
+        "YCOORD": 60.1678703,
+        "DEPARTURES": 5273,
+        "RETURNS": 5585
+    },
+    {
+        "ID": 14,
+        "NIMI": "Senaatintori",
+        "XCOORD": 24.9526414,
+        "YCOORD": 60.1691278,
+        "DEPARTURES": 10620,
+        "RETURNS": 11076
+    },
+    {
+        "ID": 15,
+        "NIMI": "Ritarikatu",
+        "XCOORD": 24.955612,
+        "YCOORD": 60.171021,
+        "DEPARTURES": 8790,
+        "RETURNS": 8701
+    },
+    {
+        "ID": 16,
+        "NIMI": "Liisanpuistikko",
+        "XCOORD": 24.9613747,
+        "YCOORD": 60.1741822,
+        "DEPARTURES": 13614,
+        "RETURNS": 14033
+    },
+    {
+        "ID": 17,
+        "NIMI": "Varsapuistikko",
+        "XCOORD": 24.9494791,
+        "YCOORD": 60.1731029,
+        "DEPARTURES": 15721,
+        "RETURNS": 14750
+    },
+    {
+        "ID": 18,
+        "NIMI": "Porthania",
+        "XCOORD": 24.9488997,
+        "YCOORD": 60.1698997,
+        "DEPARTURES": 18313,
+        "RETURNS": 18846
+    },
+    {
+        "ID": 19,
+        "NIMI": "Rautatientori \/ it\u00e4",
+        "XCOORD": 24.9425268,
+        "YCOORD": 60.1708236,
+        "DEPARTURES": 25676,
+        "RETURNS": 26057
+    },
+    {
+        "ID": 20,
+        "NIMI": "Kaisaniemenpuisto",
+        "XCOORD": 24.9428715,
+        "YCOORD": 60.1729669,
+        "DEPARTURES": 18294,
+        "RETURNS": 18451
+    },
+    {
+        "ID": 21,
+        "NIMI": "T\u00f6\u00f6l\u00f6nlahdenkatu",
+        "XCOORD": 24.939284,
+        "YCOORD": 60.1729435,
+        "DEPARTURES": 35678,
+        "RETURNS": 36523
+    },
+    {
+        "ID": 22,
+        "NIMI": "Rautatientori \/ l\u00e4nsi",
+        "XCOORD": 24.9397601,
+        "YCOORD": 60.1706061,
+        "DEPARTURES": 27581,
+        "RETURNS": 28424
+    },
+    {
+        "ID": 23,
+        "NIMI": "Kiasma",
+        "XCOORD": 24.9374279,
+        "YCOORD": 60.1712579,
+        "DEPARTURES": 16479,
+        "RETURNS": 16601
+    },
+    {
+        "ID": 24,
+        "NIMI": "Mannerheimintie",
+        "XCOORD": 24.9394195,
+        "YCOORD": 60.1690724,
+        "DEPARTURES": 15755,
+        "RETURNS": 16034
+    },
+    {
+        "ID": 25,
+        "NIMI": "Narinkka",
+        "XCOORD": 24.9351212,
+        "YCOORD": 60.1700844,
+        "DEPARTURES": 19853,
+        "RETURNS": 20144
+    },
+    {
+        "ID": 26,
+        "NIMI": "Kampin metroasema",
+        "XCOORD": 24.9305373,
+        "YCOORD": 60.1686095,
+        "DEPARTURES": 36796,
+        "RETURNS": 35604
+    },
+    {
+        "ID": 27,
+        "NIMI": "Eerikinkatu",
+        "XCOORD": 24.9357851,
+        "YCOORD": 60.1673332,
+        "DEPARTURES": 8165,
+        "RETURNS": 8033
+    },
+    {
+        "ID": 28,
+        "NIMI": "Lastenlehto",
+        "XCOORD": 24.927021,
+        "YCOORD": 60.1658121,
+        "DEPARTURES": 10372,
+        "RETURNS": 8996
+    },
+    {
+        "ID": 29,
+        "NIMI": "Baana",
+        "XCOORD": 24.9225658,
+        "YCOORD": 60.164088,
+        "DEPARTURES": 20251,
+        "RETURNS": 20406
+    },
+    {
+        "ID": 30,
+        "NIMI": "It\u00e4merentori",
+        "XCOORD": 24.9145165,
+        "YCOORD": 60.1635309,
+        "DEPARTURES": 34544,
+        "RETURNS": 35012
+    },
+    {
+        "ID": 31,
+        "NIMI": "Marian sairaala",
+        "XCOORD": 24.9220763,
+        "YCOORD": 60.1680998,
+        "DEPARTURES": 14758,
+        "RETURNS": 14470
+    },
+    {
+        "ID": 32,
+        "NIMI": "El\u00e4inmuseo",
+        "XCOORD": 24.9319348,
+        "YCOORD": 60.1713126,
+        "DEPARTURES": 9279,
+        "RETURNS": 8473
+    },
+    {
+        "ID": 33,
+        "NIMI": "Kauppakorkeakoulu",
+        "XCOORD": 24.924961,
+        "YCOORD": 60.1711591,
+        "DEPARTURES": 18822,
+        "RETURNS": 18101
+    },
+    {
+        "ID": 34,
+        "NIMI": "Kansallismuseo",
+        "XCOORD": 24.9329875,
+        "YCOORD": 60.1739641,
+        "DEPARTURES": 8230,
+        "RETURNS": 7992
+    },
+    {
+        "ID": 36,
+        "NIMI": "Apollonkatu",
+        "XCOORD": 24.9223942,
+        "YCOORD": 60.1760798,
+        "DEPARTURES": 16857,
+        "RETURNS": 17026
+    },
+    {
+        "ID": 37,
+        "NIMI": "T\u00f6\u00f6l\u00f6nkatu",
+        "XCOORD": 24.9283272,
+        "YCOORD": 60.1775598,
+        "DEPARTURES": 13256,
+        "RETURNS": 12940
+    },
+    {
+        "ID": 38,
+        "NIMI": "T\u00f6\u00f6l\u00f6ntori",
+        "XCOORD": 24.9249114,
+        "YCOORD": 60.1791231,
+        "DEPARTURES": 10544,
+        "RETURNS": 10176
+    },
+    {
+        "ID": 39,
+        "NIMI": "Ooppera",
+        "XCOORD": 24.926687,
+        "YCOORD": 60.1825529,
+        "DEPARTURES": 19814,
+        "RETURNS": 19588
+    },
+    {
+        "ID": 40,
+        "NIMI": "Hakaniemen metroasema",
+        "XCOORD": 24.9521818824,
+        "YCOORD": 60.1781030376,
+        "DEPARTURES": 17633,
+        "RETURNS": 18207
+    },
+    {
+        "ID": 41,
+        "NIMI": "Ympyr\u00e4talo",
+        "XCOORD": 24.9494,
+        "YCOORD": 60.180863,
+        "DEPARTURES": 26201,
+        "RETURNS": 27038
+    },
+    {
+        "ID": 42,
+        "NIMI": "Haapaniemenkatu",
+        "XCOORD": 24.9567211,
+        "YCOORD": 60.1820001,
+        "DEPARTURES": 9915,
+        "RETURNS": 9714
+    },
+    {
+        "ID": 43,
+        "NIMI": "Karhupuisto",
+        "XCOORD": 24.9526763,
+        "YCOORD": 60.1842833,
+        "DEPARTURES": 9188,
+        "RETURNS": 7295
+    },
+    {
+        "ID": 44,
+        "NIMI": "S\u00f6rn\u00e4isten metroasema",
+        "XCOORD": 24.9607095,
+        "YCOORD": 60.1877299,
+        "DEPARTURES": 27902,
+        "RETURNS": 26313
+    },
+    {
+        "ID": 45,
+        "NIMI": "Brahen kentt\u00e4",
+        "XCOORD": 24.9509168,
+        "YCOORD": 60.1868618,
+        "DEPARTURES": 15663,
+        "RETURNS": 13598
+    },
+    {
+        "ID": 46,
+        "NIMI": "Diakoniapuisto",
+        "XCOORD": 24.9418576,
+        "YCOORD": 60.1862877,
+        "DEPARTURES": 9919,
+        "RETURNS": 9822
+    },
+    {
+        "ID": 47,
+        "NIMI": "Kauppatori",
+        "XCOORD": 24.9563134,
+        "YCOORD": 60.1676194,
+        "DEPARTURES": 13089,
+        "RETURNS": 14031
+    },
+    {
+        "ID": 48,
+        "NIMI": "Mastokatu",
+        "XCOORD": 24.9674861,
+        "YCOORD": 60.1647545,
+        "DEPARTURES": 6656,
+        "RETURNS": 7093
+    },
+    {
+        "ID": 50,
+        "NIMI": "Melkonkuja",
+        "XCOORD": 24.8861094,
+        "YCOORD": 60.1498127,
+        "DEPARTURES": 4411,
+        "RETURNS": 4429
+    },
+    {
+        "ID": 51,
+        "NIMI": "It\u00e4lahdenkatu",
+        "XCOORD": 24.8812502,
+        "YCOORD": 60.15066,
+        "DEPARTURES": 4163,
+        "RETURNS": 4158
+    },
+    {
+        "ID": 52,
+        "NIMI": "Heikkil\u00e4naukio",
+        "XCOORD": 24.8793159,
+        "YCOORD": 60.1540763,
+        "DEPARTURES": 6024,
+        "RETURNS": 6441
+    },
+    {
+        "ID": 53,
+        "NIMI": "Heikkil\u00e4ntie",
+        "XCOORD": 24.8850653,
+        "YCOORD": 60.156817,
+        "DEPARTURES": 7665,
+        "RETURNS": 7948
+    },
+    {
+        "ID": 54,
+        "NIMI": "Gyldenintie",
+        "XCOORD": 24.8766658,
+        "YCOORD": 60.1583842,
+        "DEPARTURES": 4038,
+        "RETURNS": 4121
+    },
+    {
+        "ID": 55,
+        "NIMI": "Lahnalahdentie",
+        "XCOORD": 24.8679212,
+        "YCOORD": 60.1617736,
+        "DEPARTURES": 3719,
+        "RETURNS": 3746
+    },
+    {
+        "ID": 56,
+        "NIMI": "Luoteisv\u00e4yl\u00e4",
+        "XCOORD": 24.8601992,
+        "YCOORD": 60.1654485,
+        "DEPARTURES": 3958,
+        "RETURNS": 3989
+    },
+    {
+        "ID": 57,
+        "NIMI": "Lauttasaaren ostoskeskus",
+        "XCOORD": 24.8815441,
+        "YCOORD": 60.1603306,
+        "DEPARTURES": 9679,
+        "RETURNS": 9492
+    },
+    {
+        "ID": 58,
+        "NIMI": "Lauttasaarensilta",
+        "XCOORD": 24.8926386,
+        "YCOORD": 60.1615512,
+        "DEPARTURES": 8429,
+        "RETURNS": 8627
+    },
+    {
+        "ID": 60,
+        "NIMI": "Porkkalankatu",
+        "XCOORD": 24.905336,
+        "YCOORD": 60.1632493,
+        "DEPARTURES": 16540,
+        "RETURNS": 17681
+    },
+    {
+        "ID": 61,
+        "NIMI": "L\u00e4nsisatamankatu",
+        "XCOORD": 24.909692,
+        "YCOORD": 60.1589276,
+        "DEPARTURES": 10046,
+        "RETURNS": 9999
+    },
+    {
+        "ID": 62,
+        "NIMI": "Messityt\u00f6nkatu",
+        "XCOORD": 24.9158734,
+        "YCOORD": 60.1610901,
+        "DEPARTURES": 9171,
+        "RETURNS": 8875
+    },
+    {
+        "ID": 63,
+        "NIMI": "J\u00e4tk\u00e4saarenlaituri",
+        "XCOORD": 24.9214896,
+        "YCOORD": 60.1619311,
+        "DEPARTURES": 18803,
+        "RETURNS": 18454
+    },
+    {
+        "ID": 64,
+        "NIMI": "Tyynenmerenkatu",
+        "XCOORD": 24.9217464,
+        "YCOORD": 60.1565255,
+        "DEPARTURES": 18334,
+        "RETURNS": 18937
+    },
+    {
+        "ID": 65,
+        "NIMI": "Hylkeenpyyt\u00e4j\u00e4nkatu",
+        "XCOORD": 24.9314755,
+        "YCOORD": 60.1546505,
+        "DEPARTURES": 16329,
+        "RETURNS": 18169
+    },
+    {
+        "ID": 66,
+        "NIMI": "Ehrenstr\u00f6mintie",
+        "XCOORD": 24.9591271,
+        "YCOORD": 60.155309,
+        "DEPARTURES": 6845,
+        "RETURNS": 6976
+    },
+    {
+        "ID": 68,
+        "NIMI": "Albertinkatu",
+        "XCOORD": 24.9368179,
+        "YCOORD": 60.1618359,
+        "DEPARTURES": 15596,
+        "RETURNS": 15409
+    },
+    {
+        "ID": 69,
+        "NIMI": "Kalevankatu",
+        "XCOORD": 24.9314323,
+        "YCOORD": 60.1656962,
+        "DEPARTURES": 11796,
+        "RETURNS": 11480
+    },
+    {
+        "ID": 70,
+        "NIMI": "Sammonpuistikko",
+        "XCOORD": 24.9224112,
+        "YCOORD": 60.1731473,
+        "DEPARTURES": 12092,
+        "RETURNS": 11576
+    },
+    {
+        "ID": 71,
+        "NIMI": "Hietaniemenkatu",
+        "XCOORD": 24.91131,
+        "YCOORD": 60.17263,
+        "DEPARTURES": 5839,
+        "RETURNS": 5845
+    },
+    {
+        "ID": 72,
+        "NIMI": "Etel\u00e4inen Hesperiankatu",
+        "XCOORD": 24.9160216,
+        "YCOORD": 60.1756332,
+        "DEPARTURES": 10536,
+        "RETURNS": 11155
+    },
+    {
+        "ID": 73,
+        "NIMI": "Kes\u00e4katu",
+        "XCOORD": 24.9132504,
+        "YCOORD": 60.1792967,
+        "DEPARTURES": 8190,
+        "RETURNS": 8315
+    },
+    {
+        "ID": 74,
+        "NIMI": "Rajasaarentie",
+        "XCOORD": 24.911127,
+        "YCOORD": 60.183137,
+        "DEPARTURES": 7332,
+        "RETURNS": 7315
+    },
+    {
+        "ID": 75,
+        "NIMI": "Korjaamo",
+        "XCOORD": 24.9198371,
+        "YCOORD": 60.1838677,
+        "DEPARTURES": 17512,
+        "RETURNS": 17545
+    },
+    {
+        "ID": 76,
+        "NIMI": "Olympiastadion",
+        "XCOORD": 24.9249741,
+        "YCOORD": 60.1845055,
+        "DEPARTURES": 13455,
+        "RETURNS": 13732
+    },
+    {
+        "ID": 78,
+        "NIMI": "Messeniuksenkatu",
+        "XCOORD": 24.9180102,
+        "YCOORD": 60.1878352,
+        "DEPARTURES": 13417,
+        "RETURNS": 13275
+    },
+    {
+        "ID": 79,
+        "NIMI": "Uimastadion",
+        "XCOORD": 24.9292286,
+        "YCOORD": 60.1892172,
+        "DEPARTURES": 8911,
+        "RETURNS": 8642
+    },
+    {
+        "ID": 80,
+        "NIMI": "J\u00e4\u00e4halli",
+        "XCOORD": 24.9205978,
+        "YCOORD": 60.1894025,
+        "DEPARTURES": 8836,
+        "RETURNS": 8811
+    },
+    {
+        "ID": 81,
+        "NIMI": "Stenb\u00e4ckinkatu",
+        "XCOORD": 24.9123717,
+        "YCOORD": 60.1883091,
+        "DEPARTURES": 6269,
+        "RETURNS": 5962
+    },
+    {
+        "ID": 82,
+        "NIMI": "T\u00f6\u00f6l\u00f6ntulli",
+        "XCOORD": 24.91405,
+        "YCOORD": 60.19063,
+        "DEPARTURES": 9446,
+        "RETURNS": 9191
+    },
+    {
+        "ID": 83,
+        "NIMI": "Meilahden sairaala",
+        "XCOORD": 24.9083351,
+        "YCOORD": 60.1902195,
+        "DEPARTURES": 9498,
+        "RETURNS": 9133
+    },
+    {
+        "ID": 85,
+        "NIMI": "Jalavatie",
+        "XCOORD": 24.905889,
+        "YCOORD": 60.1934696,
+        "DEPARTURES": 6951,
+        "RETURNS": 6586
+    },
+    {
+        "ID": 86,
+        "NIMI": "Kuusitie",
+        "XCOORD": 24.9018997,
+        "YCOORD": 60.1952452,
+        "DEPARTURES": 8820,
+        "RETURNS": 8177
+    },
+    {
+        "ID": 88,
+        "NIMI": "Kiskontie",
+        "XCOORD": 24.9012997,
+        "YCOORD": 60.1989402,
+        "DEPARTURES": 2806,
+        "RETURNS": 2730
+    },
+    {
+        "ID": 89,
+        "NIMI": "Tilkanvierto",
+        "XCOORD": 24.899261,
+        "YCOORD": 60.1975329,
+        "DEPARTURES": 9250,
+        "RETURNS": 9465
+    },
+    {
+        "ID": 90,
+        "NIMI": "Paciuksenkaari",
+        "XCOORD": 24.8911179,
+        "YCOORD": 60.1944475,
+        "DEPARTURES": 2658,
+        "RETURNS": 2705
+    },
+    {
+        "ID": 91,
+        "NIMI": "Seurasaari",
+        "XCOORD": 24.8847362,
+        "YCOORD": 60.188399,
+        "DEPARTURES": 5110,
+        "RETURNS": 5045
+    },
+    {
+        "ID": 92,
+        "NIMI": "Saunalahdentie",
+        "XCOORD": 24.878452,
+        "YCOORD": 60.1928927,
+        "DEPARTURES": 2222,
+        "RETURNS": 2379
+    },
+    {
+        "ID": 93,
+        "NIMI": "Torpanranta",
+        "XCOORD": 24.8713963,
+        "YCOORD": 60.1948358,
+        "DEPARTURES": 2457,
+        "RETURNS": 2720
+    },
+    {
+        "ID": 94,
+        "NIMI": "Laajalahden aukio",
+        "XCOORD": 24.8759851,
+        "YCOORD": 60.1983016,
+        "DEPARTURES": 6428,
+        "RETURNS": 7628
+    },
+    {
+        "ID": 95,
+        "NIMI": "Munkkiniemen aukio",
+        "XCOORD": 24.8840917,
+        "YCOORD": 60.1967196,
+        "DEPARTURES": 7310,
+        "RETURNS": 7728
+    },
+    {
+        "ID": 96,
+        "NIMI": "Huopalahdentie",
+        "XCOORD": 24.8836209,
+        "YCOORD": 60.1996653,
+        "DEPARTURES": 3603,
+        "RETURNS": 3885
+    },
+    {
+        "ID": 97,
+        "NIMI": "Professorintie",
+        "XCOORD": 24.8766846,
+        "YCOORD": 60.2006837,
+        "DEPARTURES": 1984,
+        "RETURNS": 1963
+    },
+    {
+        "ID": 98,
+        "NIMI": "Ulvilantie",
+        "XCOORD": 24.8708833,
+        "YCOORD": 60.2038803,
+        "DEPARTURES": 2637,
+        "RETURNS": 2393
+    },
+    {
+        "ID": 99,
+        "NIMI": "Muusantori",
+        "XCOORD": 24.8559544,
+        "YCOORD": 60.2071193,
+        "DEPARTURES": 2158,
+        "RETURNS": 2558
+    },
+    {
+        "ID": 100,
+        "NIMI": "Ulvilanpuisto",
+        "XCOORD": 24.87396,
+        "YCOORD": 60.20604,
+        "DEPARTURES": 2489,
+        "RETURNS": 2420
+    },
+    {
+        "ID": 101,
+        "NIMI": "Munkkivuoren ostoskeskus",
+        "XCOORD": 24.8798291,
+        "YCOORD": 60.2059946,
+        "DEPARTURES": 6023,
+        "RETURNS": 6421
+    },
+    {
+        "ID": 102,
+        "NIMI": "Niemenm\u00e4enkuja",
+        "XCOORD": 24.8857767,
+        "YCOORD": 60.2039914,
+        "DEPARTURES": 1610,
+        "RETURNS": 1566
+    },
+    {
+        "ID": 103,
+        "NIMI": "Vihdintie",
+        "XCOORD": 24.8895209,
+        "YCOORD": 60.208925,
+        "DEPARTURES": 5788,
+        "RETURNS": 5864
+    },
+    {
+        "ID": 104,
+        "NIMI": "Kriikunakuja",
+        "XCOORD": 24.8916817,
+        "YCOORD": 60.2056785,
+        "DEPARTURES": 2517,
+        "RETURNS": 2652
+    },
+    {
+        "ID": 105,
+        "NIMI": "Tilkantori",
+        "XCOORD": 24.8934761,
+        "YCOORD": 60.2028392,
+        "DEPARTURES": 3599,
+        "RETURNS": 3890
+    },
+    {
+        "ID": 106,
+        "NIMI": "Korppaanm\u00e4entie",
+        "XCOORD": 24.8989297,
+        "YCOORD": 60.2034735,
+        "DEPARTURES": 4690,
+        "RETURNS": 4798
+    },
+    {
+        "ID": 107,
+        "NIMI": "Tenholantie",
+        "XCOORD": 24.9054609,
+        "YCOORD": 60.2024393,
+        "DEPARTURES": 5911,
+        "RETURNS": 5857
+    },
+    {
+        "ID": 108,
+        "NIMI": "Radiokatu",
+        "XCOORD": 24.91792,
+        "YCOORD": 60.20445,
+        "DEPARTURES": 4862,
+        "RETURNS": 4387
+    },
+    {
+        "ID": 109,
+        "NIMI": "Hertanm\u00e4enkatu",
+        "XCOORD": 24.92258,
+        "YCOORD": 60.20233,
+        "DEPARTURES": 2836,
+        "RETURNS": 2565
+    },
+    {
+        "ID": 110,
+        "NIMI": "Maistraatintori",
+        "XCOORD": 24.9253082,
+        "YCOORD": 60.1999129,
+        "DEPARTURES": 5969,
+        "RETURNS": 5347
+    },
+    {
+        "ID": 111,
+        "NIMI": "Esterinportti",
+        "XCOORD": 24.9267808,
+        "YCOORD": 60.1975724,
+        "DEPARTURES": 8561,
+        "RETURNS": 8081
+    },
+    {
+        "ID": 112,
+        "NIMI": "Rautatiel\u00e4isenkatu",
+        "XCOORD": 24.9332721,
+        "YCOORD": 60.2014382,
+        "DEPARTURES": 6262,
+        "RETURNS": 5904
+    },
+    {
+        "ID": 113,
+        "NIMI": "Veturitori",
+        "XCOORD": 24.93519,
+        "YCOORD": 60.19971,
+        "DEPARTURES": 16409,
+        "RETURNS": 14078
+    },
+    {
+        "ID": 114,
+        "NIMI": "Ratapihantie",
+        "XCOORD": 24.93591275,
+        "YCOORD": 60.19699019,
+        "DEPARTURES": 11360,
+        "RETURNS": 10389
+    },
+    {
+        "ID": 115,
+        "NIMI": "Venttiilikuja",
+        "XCOORD": 24.941578,
+        "YCOORD": 60.1942095,
+        "DEPARTURES": 8865,
+        "RETURNS": 7932
+    },
+    {
+        "ID": 116,
+        "NIMI": "Linnanm\u00e4ki",
+        "XCOORD": 24.9401593,
+        "YCOORD": 60.1911411,
+        "DEPARTURES": 12544,
+        "RETURNS": 12083
+    },
+    {
+        "ID": 117,
+        "NIMI": "Brahen puistikko",
+        "XCOORD": 24.9481024,
+        "YCOORD": 60.1896706,
+        "DEPARTURES": 9879,
+        "RETURNS": 9501
+    },
+    {
+        "ID": 118,
+        "NIMI": "Fleminginkatu",
+        "XCOORD": 24.9521601,
+        "YCOORD": 60.1895417,
+        "DEPARTURES": 14862,
+        "RETURNS": 14714
+    },
+    {
+        "ID": 119,
+        "NIMI": "Gebhardinaukio",
+        "XCOORD": 24.9568729,
+        "YCOORD": 60.1907096,
+        "DEPARTURES": 6265,
+        "RETURNS": 5835
+    },
+    {
+        "ID": 120,
+        "NIMI": "M\u00e4kel\u00e4nkatu",
+        "XCOORD": 24.9635596,
+        "YCOORD": 60.1896352,
+        "DEPARTURES": 9803,
+        "RETURNS": 5800
+    },
+    {
+        "ID": 121,
+        "NIMI": "Vilhonvuorenkatu",
+        "XCOORD": 24.9678718,
+        "YCOORD": 60.1864633,
+        "DEPARTURES": 4835,
+        "RETURNS": 5082
+    },
+    {
+        "ID": 122,
+        "NIMI": "Lintulahdenkatu",
+        "XCOORD": 24.9621936,
+        "YCOORD": 60.1837182,
+        "DEPARTURES": 12123,
+        "RETURNS": 12935
+    },
+    {
+        "ID": 123,
+        "NIMI": "N\u00e4kinsilta",
+        "XCOORD": 24.9554618,
+        "YCOORD": 60.179765,
+        "DEPARTURES": 12208,
+        "RETURNS": 12039
+    },
+    {
+        "ID": 125,
+        "NIMI": "Arielinkatu",
+        "XCOORD": 24.9786428,
+        "YCOORD": 60.1847821,
+        "DEPARTURES": 10435,
+        "RETURNS": 11575
+    },
+    {
+        "ID": 126,
+        "NIMI": "Kalasataman metroasema",
+        "XCOORD": 24.97587,
+        "YCOORD": 60.18841,
+        "DEPARTURES": 5854,
+        "RETURNS": 6330
+    },
+    {
+        "ID": 127,
+        "NIMI": "Teurastamo",
+        "XCOORD": 24.9711926,
+        "YCOORD": 60.1896994,
+        "DEPARTURES": 10004,
+        "RETURNS": 10935
+    },
+    {
+        "ID": 128,
+        "NIMI": "P\u00e4ij\u00e4nteentie",
+        "XCOORD": 24.9642238,
+        "YCOORD": 60.1920576,
+        "DEPARTURES": 4603,
+        "RETURNS": 4339
+    },
+    {
+        "ID": 129,
+        "NIMI": "Pernajantie",
+        "XCOORD": 24.9579931,
+        "YCOORD": 60.1942342,
+        "DEPARTURES": 9040,
+        "RETURNS": 8715
+    },
+    {
+        "ID": 130,
+        "NIMI": "Teollisuuskatu",
+        "XCOORD": 24.9487524,
+        "YCOORD": 60.193486,
+        "DEPARTURES": 6715,
+        "RETURNS": 6859
+    },
+    {
+        "ID": 131,
+        "NIMI": "Elim\u00e4enkatu",
+        "XCOORD": 24.9476186,
+        "YCOORD": 60.1962627,
+        "DEPARTURES": 7698,
+        "RETURNS": 7512
+    },
+    {
+        "ID": 133,
+        "NIMI": "Paavalinpuisto",
+        "XCOORD": 24.9614385,
+        "YCOORD": 60.1974886,
+        "DEPARTURES": 8661,
+        "RETURNS": 8377
+    },
+    {
+        "ID": 134,
+        "NIMI": "Haukilahdenkatu",
+        "XCOORD": 24.9676708,
+        "YCOORD": 60.1985314,
+        "DEPARTURES": 6124,
+        "RETURNS": 6323
+    },
+    {
+        "ID": 135,
+        "NIMI": "Velodrominrinne",
+        "XCOORD": 24.9440506,
+        "YCOORD": 60.2010614,
+        "DEPARTURES": 6209,
+        "RETURNS": 5960
+    },
+    {
+        "ID": 136,
+        "NIMI": "Sofianlehdonkatu",
+        "XCOORD": 24.9513636,
+        "YCOORD": 60.2032721,
+        "DEPARTURES": 3267,
+        "RETURNS": 3198
+    },
+    {
+        "ID": 137,
+        "NIMI": "Arabian kauppakeskus",
+        "XCOORD": 24.9666128,
+        "YCOORD": 60.2027912,
+        "DEPARTURES": 12085,
+        "RETURNS": 12795
+    },
+    {
+        "ID": 138,
+        "NIMI": "Arabiankatu",
+        "XCOORD": 24.9765672,
+        "YCOORD": 60.2064085,
+        "DEPARTURES": 5864,
+        "RETURNS": 6865
+    },
+    {
+        "ID": 139,
+        "NIMI": "Kaironkatu",
+        "XCOORD": 24.9765801,
+        "YCOORD": 60.2100255,
+        "DEPARTURES": 3580,
+        "RETURNS": 4074
+    },
+    {
+        "ID": 140,
+        "NIMI": "Verkatehtaanpuisto",
+        "XCOORD": 24.9797283,
+        "YCOORD": 60.2137007,
+        "DEPARTURES": 4470,
+        "RETURNS": 4748
+    },
+    {
+        "ID": 141,
+        "NIMI": "Intiankatu",
+        "XCOORD": 24.9676383,
+        "YCOORD": 60.2078582,
+        "DEPARTURES": 10053,
+        "RETURNS": 10091
+    },
+    {
+        "ID": 142,
+        "NIMI": "Koskelantie",
+        "XCOORD": 24.9465139,
+        "YCOORD": 60.208749,
+        "DEPARTURES": 7152,
+        "RETURNS": 7252
+    },
+    {
+        "ID": 144,
+        "NIMI": "K\u00e4pyl\u00e4ntie",
+        "XCOORD": 24.9588108,
+        "YCOORD": 60.2139043,
+        "DEPARTURES": 4418,
+        "RETURNS": 4519
+    },
+    {
+        "ID": 145,
+        "NIMI": "Pohjolankatu",
+        "XCOORD": 24.9437964,
+        "YCOORD": 60.213421,
+        "DEPARTURES": 2347,
+        "RETURNS": 2058
+    },
+    {
+        "ID": 146,
+        "NIMI": "Pohjolanaukio",
+        "XCOORD": 24.9544112,
+        "YCOORD": 60.2172043,
+        "DEPARTURES": 2794,
+        "RETURNS": 2896
+    },
+    {
+        "ID": 147,
+        "NIMI": "K\u00e4pyl\u00e4n asema",
+        "XCOORD": 24.9476538,
+        "YCOORD": 60.22140089,
+        "DEPARTURES": 3606,
+        "RETURNS": 3268
+    },
+    {
+        "ID": 148,
+        "NIMI": "Juhana Herttuan tie",
+        "XCOORD": 24.9664619,
+        "YCOORD": 60.2184427,
+        "DEPARTURES": 3776,
+        "RETURNS": 3890
+    },
+    {
+        "ID": 149,
+        "NIMI": "Toinen linja",
+        "XCOORD": 24.9441949,
+        "YCOORD": 60.183164,
+        "DEPARTURES": 10516,
+        "RETURNS": 9688
+    },
+    {
+        "ID": 150,
+        "NIMI": "T\u00f6\u00f6l\u00f6nlahden puisto",
+        "XCOORD": 24.9338701,
+        "YCOORD": 60.1766793,
+        "DEPARTURES": 12558,
+        "RETURNS": 12665
+    }
+]

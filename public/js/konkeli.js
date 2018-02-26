@@ -1,20 +1,58 @@
 var lineGroup;
 var line;
+var info_div
 
 // Basic Leaflet set up. Basemap from the API of Digitransit
-var map = L.map('map').setView([60.18, 24.93], 13);
+var map = L.map('map').setView([60.18, 24.83], 13);
 var basemap = L.tileLayer('http://api.digitransit.fi/map/v1/{id}/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ',
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ',
     id: 'hsl-map'
 }).addTo(map);
 
+function fillInfoDivAtStart() {
+    createInfoDiv()
+    var welcome_div = document.createElement("div")
+    welcome_div.id = 'welcomeContainer'
+
+    var credits_div = document.createElement("div")
+    credits_div.id = 'creditsContainer'
+
+    welcome_title = document.createElement("H1")
+    welcome_title.id = 'infoDivHeader'
+    welcome_title.innerHTML = 'Welcome!'
+
+    welcome_text = document.createElement("p")
+    welcome_text.id = 'infoDivText'
+    welcome_text.innerHTML = "You've stumbled onto <b>Konkeli</b> - a map application visualising the spatial and temporal dimensions of the city bike system in Helsinki."
+    +"<br><br>The system was composed of 140 stations and XXXX bikes in 2017 and all together over 1,49 million departures were made. It amounts to X departures per day per bike."
+    +"<br><br><b>Click a station for more information!</b>"
+
+    credits = document.createElement("p")
+    credits.id = 'creditsText'
+    credits.innerHTML = "This application was made by <b>Johannes Nyman</b> in collobration with the Accessibility Research Group of the University of Helsinki<br> http://blogs.helsinki.fi/accessibility/<br>More information & source code: https://github.com/nyjohannes/konkeli"
+
+    welcome_div.appendChild(welcome_title)
+    welcome_div.appendChild(welcome_text)
+    credits_div.appendChild(credits)
+    info_div.appendChild(welcome_div)
+    info_div.appendChild(credits_div)
+}
+
 function drawTimeGraph(station_times_url) {
 
-    var margin = { top: 30, right: 30, bottom: 30, left: 50 },
-        width = 400 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+    if ($(window).width() < 431) {
+        var margin = { top: 30, right: 30, bottom: 30, left: 50 },
+            width = 360 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
+    }
+
+    else {
+        var margin = { top: 30, right: 30, bottom: 30, left: 50 },
+            width = 400 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
+    }
 
     var x = d3.scale.linear().range([0, width])
     var y = d3.scale.linear().range([height, 0]);
@@ -41,7 +79,10 @@ function drawTimeGraph(station_times_url) {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", "0 0 300 300")
+        .classed("svg-content", true);
 
     d3.json(station_times_url, function (error, data) {
         color.domain(d3.keys(data[0]).filter(function (key) { return key !== "TIME"; }));
@@ -71,6 +112,7 @@ function drawTimeGraph(station_times_url) {
             .attr("class", "y axis")
             .style({ 'stroke': '#5b5b5b', 'fill': 'none', 'stroke-width': '1px' })
             .call(yAxis);
+
 
 
         var time_serie = svg.selectAll(".timeSeries")
@@ -163,15 +205,15 @@ function pinTheStations(stationJSON) {
     stationGroupDict = {}
     for (var i = 0; i < stationJSON.length; i++) {
         var station = stationJSON[i];
-        stationGroupDict[station.ID] = [station.XCOORD, station.YCOORD, station.Nimi];
+        stationGroupDict[station.ID] = [station.XCOORD, station.YCOORD, station.NIMI];
 
         var stationMarker = L.marker([station.YCOORD, station.XCOORD],
             {
                 icon: new L.NumberedDivIcon({ number: station.DEPARTURES, width: (7 / 9375 * station.DEPARTURES + 272 / 15) }),
-                nimi: station.Nimi,
+                NIMI: station.NIMI,
                 ID: station.ID,
                 DEPARTURES: station.DEPARTURES,
-                RETURNS: 0,
+                RETURNS: station.RETURNS,
                 SIZE: 0
             }
         ).on("click", iClickedOnAStation);
@@ -183,17 +225,70 @@ function pinTheStations(stationJSON) {
     stationGroup.addTo(map)
 }
 
-function iClickedOnAStation(e) {
-    infoDiv = document.getElementById("infoDiv")
-    document.getElementById("graphContainer").innerHTML = "";
-    document.getElementById("statsContainer").innerHTML = "";
-    document.getElementById("stationPairContainer").innerHTML = "";
+function emptyInfoDiv() {
+    close_button = document.getElementById('closeButton')
+    info_div.innerHTML = "";
+    info_div.appendChild(close_button)
 
-    title = document.getElementById("infoDivTitle")
-    title.innerHTML = e.target.options.nimi
+}
+
+function createInfoDiv() {
+    info_div = document.createElement('div')
+    info_div.id = 'infoDiv'
+
+    if ($(window).width() < 431) {
+        info_div.style.width = '350px'
+    } else {
+        info_div.style.width = '400px'
+    }
+
+    var close_button = document.createElement('button')
+    close_button.id = 'closeButton'
+    close_button.innerHTML = '<b>X</b>'
+    close_button.onclick = function () {
+        this.parentNode.parentNode
+            .removeChild(this.parentNode);
+        return false;
+    };
+
+    info_div.appendChild(close_button)
+    document.body.appendChild(info_div);
+}
+
+function iClickedOnAStation(e) {
+
+    if (!document.getElementById("infoDiv")) {
+        createInfoDiv()
+    }
+    else { emptyInfoDiv() }
+
+    graph_container = document.createElement('div')
+    graph_container.id = 'graphContainer'
+    stats_container = document.createElement('div')
+    stats_container.id = 'statsContainer'
+    station_pair_container = document.createElement('div')
+    station_pair_container.id = 'stationPairContainer'
+    station_title = document.createElement('H1')
+    station_title.id = 'infoDivHeader'
+    console.log(e.target)
+    station_title.innerHTML = e.target.options.NIMI
+
+    info_div.appendChild(station_title)
+    info_div.appendChild(graph_container)
+    info_div.appendChild(stats_container)
+    info_div.appendChild(station_pair_container)
+
+
+
+    // document.getElementById("graphContainer").innerHTML = "";
+    // document.getElementById("statsContainer").innerHTML = "";
+    // document.getElementById("stationPairContainer").innerHTML = "";
+
+    // title = document.getElementById("infoDivTitle")
+    // title.innerHTML = e.target.options.nimi
 
     clickedStation = e.target;
-    console.log(e.target);
+    // console.log(e.target);
     if (map.hasLayer(line)) {
         for (key in map['_layers']) {
             // console.log(map['_layers'][key])
@@ -220,25 +315,25 @@ function iClickedOnAStation(e) {
         createStationPairTable(data);
     }
 
-    var statisticsDiv = document.getElementById("statsContainer")
-    createStatTextLine(statisticsDiv, "Departures: ", e.target.options.DEPARTURES)
-    createStatTextLine(statisticsDiv, "Returns: ", e.target.options.RETURNS)
-    createStatTextLine(statisticsDiv, "Station size: ", e.target.options.SIZE)
+    // var statisticsDiv = document.getElementById("statsContainer")
+    createStatTextLine(stats_container, "Departures: ", e.target.options.DEPARTURES)
+    createStatTextLine(stats_container, "Returns: ", e.target.options.RETURNS)
+    createStatTextLine(stats_container, "Station size: ", e.target.options.SIZE)
 
 
 }
 
 function createStationPairTable(data) {
-    stationPairDiv = document.getElementById("stationPairContainer");
+    station_pair_container = document.getElementById("stationPairContainer");
     var title = document.createElement("H1")
-    title.id = "stationPairDivTitle"
+    title.id = "infoDivHeader"
     title.innerHTML = "Top 10 destinations";
-    stationPairDiv.appendChild(title)
+    station_pair_container.appendChild(title)
 
     var col = ["RETURN_STATION", "DEPARTURES", "DISTANCE_MEAN", "DURATION_MEAN"];
-    var better_cols = ["DESTINATION", "DEPARTURES", "DISTANCE (MEAN)", "DURATION (MEAN)"];
+    var better_cols = ["DESTINATION", "RETURNS", "DISTANCE (MEAN)", "DURATION (MEAN)"];
 
-    console.log(col)
+    // console.log(col)
     var table = document.createElement("table");
     table.id = "stationPairTable"
     var tr = table.insertRow(-1);
@@ -256,15 +351,15 @@ function createStationPairTable(data) {
             var tabCell = tr.insertCell(-1);
 
             value = data[i][col[j]]
-            if (col[j] == "DISTANCE_MEAN") { value = Math.round(value) +" m" }
-            if (col[j] == "DURATION_MEAN") { value = Math.round(value / 60) +" min" }
-            if(col[j] == "RETURN_STATION") { value = stationGroupDict[data[i][col[j]]].slice(2,3)}
+            if (col[j] == "DISTANCE_MEAN") { value = Math.round(value) + " m" }
+            if (col[j] == "DURATION_MEAN") { value = Math.round(value / 60) + " min" }
+            if (col[j] == "RETURN_STATION") { value = stationGroupDict[data[i][col[j]]].slice(2, 3) }
 
             tabCell.innerHTML = value
 
         }
     }
-    stationPairDiv.appendChild(table)
+    station_pair_container.appendChild(table)
 
 }
 
@@ -307,10 +402,10 @@ function drawStationPairLines(station_pair_JSON) {
     // console.log(station_pair_JSON)
     // console.log(station_pair_JSON)
     // console.log(stationGroupDict)
-    departure_station_coord = stationGroupDict[station_pair_JSON[0].DEPARTURE_STATION].slice(0,2)
+    departure_station_coord = stationGroupDict[station_pair_JSON[0].DEPARTURE_STATION].slice(0, 2)
 
     for (var i = 0; i < station_pair_JSON.length; i++) {
-        return_station_coord = stationGroupDict[station_pair_JSON[i].RETURN_STATION].slice(0,2)
+        return_station_coord = stationGroupDict[station_pair_JSON[i].RETURN_STATION].slice(0, 2)
         if (typeof (return_station_coord) == 'undefined') {
             console.log("STATION: " + station_pair_JSON[i].RETURN_STATION + " NOT FOUND")
         }
@@ -365,3 +460,4 @@ function resetHighlight(e) {
 
 // Call getStationLocations after map ready.
 map.whenReady(getStationLocations);
+fillInfoDivAtStart()

@@ -1,11 +1,12 @@
-*.log
-*.csv
-*.json
-*.dat
-*.out
-*.pid
-*.gz
-*.bat
-*.txt
+# Node build artifacts
 node_modules
-data
+npm-debug.log
+
+# Local development
+*.env
+*.dev
+.DS_Store
+
+# Docker
+Dockerfile
+docker-compose.yml

@@ -8,10 +8,28 @@
             html, body, #map {
                 height: 100%;
             }
+
+            /* @media (max-width:431px) {#infoDiv { left:3%;right:2%} #disclaimer{display:none} } */
+
+
+            #disclaimer {
+                position:absolute;
+                z-index:5000;
+                font-family: 'Titillium Web', sans-serif;
+                top:70%;
+                left:20%;
+                font-size:36;
+                font-weight: bolder;
+                color:red;
+
+            }
+
             #stationPairTable{
 
                 font-size:14px;
-                padding-top:20px;
+                padding-top:10px;
+                width:100%;
+                padding:10px 15px 15px 15px;
                 
             }
 
@@ -23,6 +41,7 @@
                 top:-24px;
                 left:-24px;
                 height:50px;
+                z-index:1000;
                 background-color:transparent;
                 text-align: center;
                 /* line-height:30px */
@@ -44,8 +63,10 @@
                 font-weight: bolder
             }
 
-            #infodiv{
+            #infoDiv{
                 position:absolute;
+                overflow-y:auto;
+                overflow-x:hidden;
                 border-radius:20px / 20px;
                 background-color: white;
                 width:400px;
@@ -59,6 +80,34 @@
                      box-shadow:0 1px 4px rgba(128, 128, 128, 0.3), 0 0 40px rgba(128, 128,128, 0.1) inset;
             }
 
+            #closeButton {
+                position:fixed;
+                border-radius: 5px;
+                padding:2px 5px;
+                background:#FFF;
+                color:#7f0000;
+                top:3%;
+                right:4%;
+
+            }
+
+            #closeButton:hover {
+                background:#ccc;
+            }
+
+            #welcomeContainer{
+                margin-top:20%;
+                width:100%;
+            }
+
+            #creditsContainer {
+                position:absolute;
+                padding-top:50px;
+                bottom:3%;
+                width:100%;
+
+            }
+
             h1 {
                 color:#5b5b5b;
                 margin-bottom:0;
@@ -66,28 +115,31 @@
             }
 
             p{
-                font-size:24px;
+                font-size:18px;
                 color:#5b5b5b;
-                padding-left:10%;
-                padding-top:5%;
                 margin:0;
             }
 
             #statRightText {
                 float:right;
                 padding-right:10%;
+                padding-top:15px;
             }
 
             #statLeftText {
                 font-weight: bold;
                 padding-left:10%;
-                padding-right:10%;
+                padding-right:35%;
+                padding-top:15px;
                 float:left
+            }
+
+            #creditsText {
+                font-size:13px;
             }
             
             #statsContainer{
-                height:180px;
-                text-align:none;
+                height:140px;
             }
 
             #imgDiv {
@@ -104,40 +156,15 @@
                 transform: translate(-50%, 0%);
             }
 
-            #infoDivTitle{
+            #infoDivText{
+                padding:30px 20px 0px 20px
+
+            }
+
+            #infoDivHeader{
                 color:#004080
             }
 
-            #stationPairDivTitle {
-
-                color: #004080
-            }
-
-            #infodiv:before, #infodiv:after
-            {
-                content:"";
-                position:absolute;
-                z-index:-1;
-                -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
-                -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
-                box-shadow:0 0 20px rgba(0,0,0,0.8);
-                top:0;
-                bottom:0;
-                left:0;
-                right:0;
-                -moz-border-radius:20px / 20px;
-                border-radius:20px / 20px;
-            }
-            #infodiv:after
-            {
-                right:10px;
-                left:auto;
-                -webkit-transform:skew(8deg) rotate(3deg);
-                   -moz-transform:skew(8deg) rotate(3deg);
-                    -ms-transform:skew(8deg) rotate(3deg);
-                     -o-transform:skew(8deg) rotate(3deg);
-                        transform:skew(8deg) rotate(3deg);
-            }
             #graphContainer {
                 
                 font-size:14px;
@@ -158,4 +185,27 @@
             .line {
                 fill: none;
                 stroke-width: 2px;
+            }
+
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+             
+            ::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+                border-radius: 8px;
+            }
+             
+            ::-webkit-scrollbar-thumb {
+                outline: 1px solid white;
+                background-color: #3D5A80;
+                border-radius: 8px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+            }
+
+            .svg-content {
+                display: inline-block;
+                position: absolute;
+                top: 0;
+                left: 0;
             }
