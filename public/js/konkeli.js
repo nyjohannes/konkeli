@@ -3,7 +3,7 @@ var line;
 var info_div
 
 // Basic Leaflet set up. Basemap from the API of Digitransit
-var map = L.map('map').setView([60.18, 24.83], 13);
+var map = L.map('map').setView([60.1899, 24.96], 13);
 var basemap = L.tileLayer('http://api.digitransit.fi/map/v1/{id}/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -26,12 +26,12 @@ function fillInfoDivAtStart() {
     welcome_text = document.createElement("p")
     welcome_text.id = 'infoDivText'
     welcome_text.innerHTML = "You've stumbled onto <b>Konkeli</b> - a map application visualising the spatial and temporal dimensions of the city bike system in Helsinki."
-    +"<br><br>The system was composed of 140 stations and XXXX bikes in 2017 and all together over 1,49 million departures were made. It amounts to X departures per day per bike."
-    +"<br><br><b>Click a station for more information!</b>"
+    +"<br><br>The system was composed of <b>140</b> stations and <b>XXXX</b> bikes in 2017 and all together over <b>1,49</b> million departures were made. It amounts to <b>X</b> departures per day per bike."
+    +"<br><br><b>Click any station for more information!</b>"
 
     credits = document.createElement("p")
     credits.id = 'creditsText'
-    credits.innerHTML = "This application was made by <b>Johannes Nyman</b> in collobration with the Accessibility Research Group of the University of Helsinki<br> http://blogs.helsinki.fi/accessibility/<br>More information & source code: https://github.com/nyjohannes/konkeli"
+    credits.innerHTML = "This application was made by <b>Johannes Nyman</b> in collobration with <a href=&quot;http://blogs.helsinki.fi/accessibility/&quot;>the Accessibility Research Group </a> of the University of Helsinki<br><b>More information & source code: </b><br><a href=&quot;https://github.com/nyjohannes/konkeli&quot;>https://github.com/nyjohannes/konkeli</a>"
 
     welcome_div.appendChild(welcome_title)
     welcome_div.appendChild(welcome_text)

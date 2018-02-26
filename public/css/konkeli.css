@@ -9,7 +9,16 @@
                 height: 100%;
             }
 
-            /* @media (max-width:431px) {#infoDiv { left:3%;right:2%} #disclaimer{display:none} } */
+            @media (max-width:431px) {
+                
+                #infoDiv {
+                    left: 50%;
+                    transform: translate( -50%);} 
+
+                #disclaimer{
+                    display:none;
+                }
+             }
 
 
             #disclaimer {
@@ -102,9 +111,12 @@
 
             #creditsContainer {
                 position:absolute;
-                padding-top:50px;
-                bottom:3%;
-                width:100%;
+                padding-top:20px;
+                bottom:20px;
+                width:95%;
+                left: 50%;
+                transform: translate(-50%);
+                border-top: 2px solid #ccc;
 
             }
 
@@ -119,7 +131,10 @@
                 color:#5b5b5b;
                 margin:0;
             }
+            a{
 
+                color: black;
+            }
             #statRightText {
                 float:right;
                 padding-right:10%;
