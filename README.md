@@ -6,11 +6,17 @@
 ### Libraries
 
 **[Node JS](https://nodejs.org/en/)**
+
 **[MongoDB](https://www.mongodb.com/)**
+
 **[Leaflet](http://leafletjs.com/)**
+
 **[jQuery](https://jquery.com/)**
+
 **[D3](https://d3js.org/)**
+
 **[D3.legend](https://gist.github.com/ZJONSSON/3918369)**
+
 
 ## Data 
 
