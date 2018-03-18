@@ -1,13 +1,16 @@
-![](public/img/promo.png)
-
+![](/public/img/promo.PNG)
 # Konkeli
 
 **[Konkeli](http://konkeli.sparetimemachine.eu)** is a map application visualising the spatial and temporal dimensions of the city bike system in Helsinki. It is a Node JS application that uses mongodb for storing the data, Leaflet for the map and D3 for the graphs.   
 
-### Contents
+### Libraries
 
- - [Data](#data)
- - [Contact](#contact)
+**[Node JS](https://nodejs.org/en/)**
+**[MongoDB](https://www.mongodb.com/)**
+**[Leaflet](http://leafletjs.com/)**
+**[jQuery](https://jquery.com/)**
+**[D3](https://d3js.org/)**
+**[D3.legend](https://gist.github.com/ZJONSSON/3918369)**
 
 ## Data 
 
