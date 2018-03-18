@@ -5,6 +5,7 @@ npm-debug.log
 # Local development
 *.env
 *.dev
+server.js
 *.json
 Procfile
 .DS_Store
