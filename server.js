@@ -14,6 +14,7 @@ app.use('/scripts', express.static(__dirname + '/node_modules/d3/'));
 app.use('/scripts', express.static(__dirname + '/node_modules/leaflet.polyline.snakeanim/'));
 app.use('/scripts', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/scripts', express.static(__dirname + '/node_modules/d3-legend/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/jquery-ui/'));
 
 routes = {};
 
@@ -37,7 +38,15 @@ routes['dumpAll'] = function (req, res) {
 //Retrieves station pair data from a single station. StationId comes from a parameter 'stationID' in the URI
 routes['getStationDepartures'] = function (req, res) {
   var stationID = parseInt(req.query.stationID);
-  appDB.collection('stationPairs').find({ "DEPARTURE_STATION": stationID }).sort({ DEPARTURES: -1 }).toArray(function (err, names) {
+  appDB.collection('stationDepartures').find({ "DEPARTURE_STATION": stationID }).sort({ DEPARTURES: -1 }).toArray(function (err, names) {
+    res.header("Content-Type", "application/json");
+    res.end(JSON.stringify(names));
+  });
+};
+
+routes['getStationReturns'] = function (req, res) {
+  var stationID = parseInt(req.query.stationID);
+  appDB.collection('stationReturns').find({ "RETURN_STATION": stationID }).sort({RETURNS: -1 }).toArray(function (err, names) {
     res.header("Content-Type", "application/json");
     res.end(JSON.stringify(names));
   });
@@ -67,11 +76,23 @@ routes['getStationTimes'] = function (req, res) {
   });
 };
 
+routes['getAllStationTimes'] = function (req, res) {
+  var stationID = parseFloat(req.query.stationID);
+  appDB.collection('stationTime').find().toArray(function (err, stations) {
+    res.header("Content-Type", "application/json");
+    res.end(JSON.stringify(stations));
+  });
+};
+
+
+
 app.get('/dumpAll', routes['dumpAll']);
 app.get('/timeAnimation',routes['timeAnimation'])
 app.get('/getStationDepartures', routes['getStationDepartures']);
+app.get('/getStationReturns', routes['getStationReturns']);
 app.get('/getStationLocations', routes['getStationLocations']);
 app.get('/getStationTimes', routes['getStationTimes']);
+app.get('/getAllStationTimes', routes['getAllStationTimes']);
 
 
 app.listen(process.env.PORT || 5000)

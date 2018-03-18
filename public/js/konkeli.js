@@ -3,13 +3,15 @@ var line;
 var info_div
 
 // Basic Leaflet set up. Basemap from the API of Digitransit
-var map = L.map('map').setView([60.1899, 24.96], 13);
+var map = L.map('map').setView([60.188, 24.97], 13);
 var basemap = L.tileLayer('http://api.digitransit.fi/map/v1/{id}/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
         '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ',
     id: 'hsl-map'
 }).addTo(map);
+
+map.doubleClickZoom.disable();
 
 function fillInfoDivAtStart() {
     createInfoDiv()
@@ -26,12 +28,12 @@ function fillInfoDivAtStart() {
     welcome_text = document.createElement("p")
     welcome_text.id = 'infoDivText'
     welcome_text.innerHTML = "You've stumbled onto <b>Konkeli</b> - a map application visualising the spatial and temporal dimensions of the city bike system in Helsinki."
-    +"<br><br>The system was composed of <b>140</b> stations and <b>XXXX</b> bikes in 2017 and all together over <b>1,49</b> million departures were made. It amounts to <b>X</b> departures per day per bike."
-    +"<br><br><b>Click any station for more information!</b>"
+        + "<br><br>The system was composed of <b>140</b> stations and approximately <b>1380</b> bikes in 2017 and all together over <b>1,49</b> million departures were made. That is an average of <b>~6</b> departures per day per bike."
+        + "<br><br><b>Click any station for more information! <br>Left click for <span style=color:#004080> departures</span>, right click (or long click) for <span style=color:#FF8000> returns</span></b>"
 
     credits = document.createElement("p")
     credits.id = 'creditsText'
-    credits.innerHTML = "This application was made by <b>Johannes Nyman</b> in collobration with <a href=&quot;http://blogs.helsinki.fi/accessibility/&quot;>the Accessibility Research Group </a> of the University of Helsinki<br><b>More information & source code: </b><br><a href=&quot;https://github.com/nyjohannes/konkeli&quot;>https://github.com/nyjohannes/konkeli</a>"
+    credits.innerHTML = "This application was made by <b>Johannes Nyman</b> in collobration with <a href=http://blogs.helsinki.fi/accessibility/>the Accessibility Research Group </a> of the University of Helsinki<br><b>More information & source code: </b><br><a href=https://github.com/nyjohannes/konkeli>https://github.com/nyjohannes/konkeli</a>"
 
     welcome_div.appendChild(welcome_title)
     welcome_div.appendChild(welcome_text)
@@ -135,7 +137,7 @@ function drawTimeGraph(station_times_url) {
             .attr("stroke-dasharray", totalLength[0] + " " + totalLength[0])
             .attr("stroke-dashoffset", totalLength[0])
             .transition()
-            .duration(800)
+            .duration(1000)
             .ease("linear")
             .attr("stroke-dashoffset", 0);
 
@@ -143,7 +145,7 @@ function drawTimeGraph(station_times_url) {
             .attr("stroke-dasharray", totalLength[1] + " " + totalLength[1])
             .attr("stroke-dashoffset", totalLength[1])
             .transition()
-            .duration(800)
+            .duration(1000)
             .ease("linear")
             .attr("stroke-dashoffset", 0);
 
@@ -155,6 +157,19 @@ function drawTimeGraph(station_times_url) {
             .call(d3.legend)
 
     });
+
+}
+
+function getCircleSymbolSize(departures) {
+
+    switch (true) {
+        case (departures < 6700):
+            return 10
+        case (departures > 6700 && departures < 12000):
+            return 15
+        case (departures >= 12000):
+            return 20
+    }
 
 }
 
@@ -175,17 +190,24 @@ L.NumberedDivIcon = L.Icon.extend({
         var div = document.createElement('div');
         var textDiv = document.createElement('div');
         textDiv.id = 'textDiv'
-        var imgDiv = document.createElement('div')
-        imgDiv.id = 'imgDiv'
-        var img = document.createElement('img')
-        img.src = '/img/bike.png'
-        img.width = this.options['width']
-        img.height = this.options['width']
-        textDiv.style.bottom = String(-9 / 28 * parseInt(this.options['width']) + 395 / 28) + "px";
+        var circleSymbol = document.createElement('div')
+        circleSymbol.className = 'circleSymbol'
+        circleSymbol.id = this.options['stationID']
+        circleSymbol.name = this.options['stationNimi']
+
+        width = this.options['width']
+        circleSymbol.style.width = width + "px"
+        circleSymbol.style.height = width + "px"
+
+        smallCircle = document.createElement('div')
+        smallCircle.className = 'circleSymbolSmall'
+        smallCircle.id = this.options['stationID']
+        smallCircle.style.width = (width - (width / 4)-1) + "px"
+        smallCircle.style.height = (width - (width / 4)-1) + "px"
 
         textDiv.textContent = this.options['number'] || '';
-        imgDiv.appendChild(img)
-        div.appendChild(imgDiv)
+        circleSymbol.appendChild(smallCircle)
+        div.appendChild(circleSymbol)
         div.appendChild(textDiv)
 
         this._setIconStyles(div, 'icon');
@@ -205,24 +227,23 @@ function pinTheStations(stationJSON) {
     stationGroupDict = {}
     for (var i = 0; i < stationJSON.length; i++) {
         var station = stationJSON[i];
-        stationGroupDict[station.ID] = [station.XCOORD, station.YCOORD, station.NIMI];
+        stationGroupDict[station.ID] = [station.XCOORD, station.YCOORD, station.NIMI, station.DEPARTURES, station.RETURNS, station.SIZE];
 
         var stationMarker = L.marker([station.YCOORD, station.XCOORD],
             {
-                icon: new L.NumberedDivIcon({ number: station.DEPARTURES, width: (7 / 9375 * station.DEPARTURES + 272 / 15) }),
+                icon: new L.NumberedDivIcon({ stationNimi: station.NIMI, stationID: station.ID, number: station.DEPARTURES, width: getCircleSymbolSize(station.DEPARTURES) }),
                 NIMI: station.NIMI,
                 ID: station.ID,
                 DEPARTURES: station.DEPARTURES,
                 RETURNS: station.RETURNS,
                 SIZE: 0
             }
-        ).on("click", iClickedOnAStation);
-
-        // stationMarker.bindPopup("<b>NIMI: </b>" + station.Nimi + "<br>" + "<b>Departures: </b>" + station.DEPARTURES);
+        )
 
         stationGroup.addLayer(stationMarker);
     }
     stationGroup.addTo(map)
+
 }
 
 function emptyInfoDiv() {
@@ -255,7 +276,7 @@ function createInfoDiv() {
     document.body.appendChild(info_div);
 }
 
-function iClickedOnAStation(e) {
+function iClickedOnAStation(station_ID, leftOrRight) {
 
     if (!document.getElementById("infoDiv")) {
         createInfoDiv()
@@ -270,8 +291,9 @@ function iClickedOnAStation(e) {
     station_pair_container.id = 'stationPairContainer'
     station_title = document.createElement('H1')
     station_title.id = 'infoDivHeader'
-    console.log(e.target)
-    station_title.innerHTML = e.target.options.NIMI
+    // console.log(e.target)
+    // console.log(stationGroupDict[station_ID][2])
+    station_title.innerHTML = stationGroupDict[station_ID][2]
 
     info_div.appendChild(station_title)
     info_div.appendChild(graph_container)
@@ -279,59 +301,58 @@ function iClickedOnAStation(e) {
     info_div.appendChild(station_pair_container)
 
 
-
-    // document.getElementById("graphContainer").innerHTML = "";
-    // document.getElementById("statsContainer").innerHTML = "";
-    // document.getElementById("stationPairContainer").innerHTML = "";
-
-    // title = document.getElementById("infoDivTitle")
-    // title.innerHTML = e.target.options.nimi
-
-    clickedStation = e.target;
-    // console.log(e.target);
     if (map.hasLayer(line)) {
         for (key in map['_layers']) {
-            // console.log(map['_layers'][key])
-            if (map['_layers'][key].options.snakingSpeed) {
+            // console.log(map['_layers'][key].options)
+            if (map['_layers'][key].options.weight) {
                 map.removeLayer(map['_layers'][key])
             }
         }
     }
 
-    clickedStation.options.isOpen = true
-    station_ID = parseInt(clickedStation.options.ID)
-    station_pair_URL = "/getStationDepartures?stationID=" + station_ID;
+    station_departures_URL = "/getStationDepartures?stationID=" + station_ID;
+    station_returns_URL = "/getStationReturns?stationID=" + station_ID;
     station_times_url = "/getStationTimes?stationID=" + station_ID
 
-    console.log(station_times_url)
-
-    // $.get(station_pair_URL, drawStationPairLines, "json");
     drawTimeGraph(station_times_url)
 
-    $.getJSON(station_pair_URL, dealWithReceivedJSON);
+    if (leftOrRight == 'right') {
+        $.getJSON(station_returns_URL, function (data) { setTimeout(function () { drawStationPairLinesToStation(data); createStationPairTable(data, "right") }, 200) });
 
-    function dealWithReceivedJSON(data) {
-        drawStationPairLines(data);
-        createStationPairTable(data);
+    }
+    else {
+        $.getJSON(station_departures_URL, function (data) { setTimeout(function () { drawStationPairLinesFromStation(data); createStationPairTable(data, "left") }, 200) });
+
     }
 
-    // var statisticsDiv = document.getElementById("statsContainer")
-    createStatTextLine(stats_container, "Departures: ", e.target.options.DEPARTURES)
-    createStatTextLine(stats_container, "Returns: ", e.target.options.RETURNS)
-    createStatTextLine(stats_container, "Station size: ", e.target.options.SIZE)
-
-
+    createStatTextLine(stats_container, "Departures: ", stationGroupDict[station_ID][3])
+    createStatTextLine(stats_container, "Returns: ", stationGroupDict[station_ID][4])
+    // createStatTextLine(stats_container, "Station size: ", stationGroupDict[station_ID][5])
 }
 
-function createStationPairTable(data) {
+function createStationPairTable(data, leftOrRightClick) {
+
     station_pair_container = document.getElementById("stationPairContainer");
+    station_pair_container.innerHTML = ""
+    // console.log(station_pair_container.childElementCount)
+
+    // if (station_pair_container.childElementCount >= 2) { break; }
     var title = document.createElement("H1")
     title.id = "infoDivHeader"
-    title.innerHTML = "Top 10 destinations";
+
+    if (leftOrRightClick == 'left') {
+        title.innerHTML = "Top 10 return stations";
+        var col = ["RETURN_STATION", "DEPARTURES", "DISTANCE_MEAN", "DURATION_MEAN"];
+    }
+
+    else {
+        title.innerHTML = "Top 10 departure stations";
+        var col = ["DEPARTURE_STATION", "RETURNS", "DISTANCE_MEAN", "DURATION_MEAN"];
+    }
+
+    var better_cols = ["STATION", "RETURNS", "DISTANCE (MEAN)", "DURATION (MEAN)"];
     station_pair_container.appendChild(title)
 
-    var col = ["RETURN_STATION", "DEPARTURES", "DISTANCE_MEAN", "DURATION_MEAN"];
-    var better_cols = ["DESTINATION", "RETURNS", "DISTANCE (MEAN)", "DURATION (MEAN)"];
 
     // console.log(col)
     var table = document.createElement("table");
@@ -353,13 +374,14 @@ function createStationPairTable(data) {
             value = data[i][col[j]]
             if (col[j] == "DISTANCE_MEAN") { value = Math.round(value) + " m" }
             if (col[j] == "DURATION_MEAN") { value = Math.round(value / 60) + " min" }
-            if (col[j] == "RETURN_STATION") { value = stationGroupDict[data[i][col[j]]].slice(2, 3) }
-
+            if (col[j] == "RETURN_STATION" | col[j] == "DEPARTURE_STATION") { value = stationGroupDict[data[i][col[j]]].slice(2, 3) }
             tabCell.innerHTML = value
 
         }
     }
+
     station_pair_container.appendChild(table)
+
 
 }
 
@@ -380,26 +402,23 @@ function createStatTextLine(div, leftText, rightText) {
 
 }
 
-function getLineWeight(departures) {
+function getLineWeight(amount) {
     switch (true) {
-        case (departures <= 500):
+        case (amount <= 500):
             return 2
-            break;
-        case (departures > 500 && departures < 1500):
-            return 5
-            break;
-        case (departures >= 1500):
+        case (amount > 500 && amount < 1000):
+            return 4
+        case (amount >= 1000 && amount < 1500):
             return 7
-            break;
+        case (amount >= 1500):
+            return 10
         default:
-            alert("none");
             break;
     }
 }
 
-function drawStationPairLines(station_pair_JSON) {
+function drawStationPairLinesFromStation(station_pair_JSON) {
     lineGroup = L.featureGroup()
-    // console.log(station_pair_JSON)
     // console.log(station_pair_JSON)
     // console.log(stationGroupDict)
     departure_station_coord = stationGroupDict[station_pair_JSON[0].DEPARTURE_STATION].slice(0, 2)
@@ -413,51 +432,98 @@ function drawStationPairLines(station_pair_JSON) {
             {
                 color: '#004080',
                 weight: getLineWeight(station_pair_JSON[i].DEPARTURES),
-                snakingSpeed: 500,
+                // snakingSpeed: 400,
                 duration_mean: station_pair_JSON[i].DURATION_MEAN,
-                distance_mean: station_pair_JSON[i].DISTANCE_MEAN,
-                clickable: true
+                distance_mean: station_pair_JSON[i].DISTANCE_MEAN
 
-            }).addTo(map).snakeIn()
+            }).addTo(map)
 
-        // .bindPopup("<b>Mean duration:</b> " + parseFloat(station_pair_JSON[i].DURATION_MEAN).toFixed(2) + "<br>" + "<b>Mean distance: </b>" + parseFloat(station_pair_JSON[i].DISTANCE_MEAN).toFixed(2))
-
-        // line.on({
-        //     mouseover: highlightFeature,
-        //     mouseout: resetHighlight
-        // });
-
+        // .addTo(map).snakeIn()
     }
+
+
 }
 
-function highlightFeature(e) {
-    var layer = e.target;
-    this.openPopup()
+function drawStationPairLinesToStation(station_pair_JSON) {
+    lineGroup = L.featureGroup()
 
-    layer.setStyle({
-        weight: 5,
-        color: '#FF8000',
-        dashArray: '',
-        fillOpacity: 0.7
-    });
+    return_station_coord = stationGroupDict[station_pair_JSON[0].RETURN_STATION].slice(0, 2)
 
-    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-        layer.bringToFront();
+    for (var i = 0; i < station_pair_JSON.length; i++) {
+        departure_station_coord = stationGroupDict[station_pair_JSON[i].DEPARTURE_STATION].slice(0, 2)
+        if (typeof (return_station_coord) == 'undefined') {
+
+        }
+        // console.log(departure_station_coord[1], departure_station_coord[0],return_station_coord[1], return_station_coord[0])
+
+        line = L.polyline([new L.LatLng(departure_station_coord[1], departure_station_coord[0]), new L.LatLng(return_station_coord[1], return_station_coord[0])],
+            {
+                color: '#FF8000',
+                weight: getLineWeight(station_pair_JSON[i].RETURNS),
+                duration_mean: station_pair_JSON[i].DURATION_MEAN,
+                distance_mean: station_pair_JSON[i].DISTANCE_MEAN
+
+            }).addTo(map)
     }
-}
-
-function resetHighlight(e) {
-    var layer = e.target;
-    this.closePopup()
-
-    layer.setStyle({
-        weight: 2,
-        color: '#004080',
-        dashArray: '',
-        fillOpacity: 0.7
-    });
 }
 
 // Call getStationLocations after map ready.
 map.whenReady(getStationLocations);
+
 fillInfoDivAtStart()
+
+function addEventListenerToStation() {
+    var station_symbols = document.getElementsByClassName("leaflet-div-icon");
+    for (i = 0; i < station_symbols.length; i++) {
+        station_symbols[i].addEventListener("mousedown", tapOrClickStart, false);
+        station_symbols[i].addEventListener("touchstart", tapOrClickStart, false);
+        station_symbols[i].addEventListener("mouseup", tapOrClickEnd, false);
+        station_symbols[i].addEventListener("touchend", tapOrClickEnd, false);
+    }
+}
+
+var mousedown;
+function tapOrClickStart(event) {
+    mousedown = Date.now();
+    event.preventDefault();
+    return false;
+}
+
+function tapOrClickEnd(evt) {
+    // console.log(evt)
+    var elapsed = Date.now() - mousedown;
+    mousedown = undefined;
+    target = evt.target || evt.srcElement;
+    // console.log(elapsed)
+
+    if (evt.which == 3) {
+        if (target.className == "circleSymbol" || target.className == 'circleSymbolSmall') {
+            // console.log("Klikkasit oikealla napilla asemaa " + evt.path[1].id);
+            iClickedOnAStation(target.id, "right")
+            return;
+        }
+    }
+
+    if (elapsed >= 1000) {
+        if (target.className == "circleSymbol" || target.className == 'circleSymbolSmall') {
+
+            iClickedOnAStation(target.id, "right")
+            return;
+        }
+    }
+
+    else {
+        if (target.className == "circleSymbol" || target.className == 'circleSymbolSmall') {
+            // console.log("Klikkasit vasemmalla napilla asemaa " + evt.path[1].id);
+            iClickedOnAStation(target.id, "left")
+            return;
+        }
+    }
+
+    evt.preventDefault();
+    return false;
+}
+
+window.addEventListener("load", function () {
+    addEventListenerToStation();
+});

@@ -18,7 +18,8 @@
     "d3":"3.5.17",
     "d3-legend":"~1.0.0",
     "leaflet.polyline.snakeanim":"0.1.1",
-    "fs":"0.0.1-security"
+    "fs":"0.0.1-security",
+    "jquery-ui":"1.12.1" 
   },
   "devDependencies": {
     "request": "^2.81.0",
